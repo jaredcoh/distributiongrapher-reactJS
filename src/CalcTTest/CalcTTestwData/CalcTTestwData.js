@@ -184,7 +184,6 @@ function MeanAndStdDev() {
   const calculateTTest = (meanA, stdA, nA, meanB, stdB, nB, isPaired) => {
     let t;
     let df;
-    const varianceType = determineVarianceType();
     if (isPaired) {
       console.log('Paired test');
       const differences = rows.map(row => row.meanA - row.meanB); // Replace with actual paired means

@@ -43,7 +43,7 @@ function AppContent() {
         <div className="header-content">
           <img src={distributionImage} alt="Normal Distribution" className="header-image" />
           <div className="title-container">
-            <h1 className="header-title">Multiple Normal Distribution Grapher</h1>
+            <h1 className="header-title">Multiple Normal Distributions Grapher</h1>
             {subtitle && <p className="header-subtitle">{subtitle}</p>}
           </div>
         </div>

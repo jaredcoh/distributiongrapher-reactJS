@@ -19,11 +19,39 @@ function NormalDistributionTable() {
   const [showLineTable, setShowLineTable] = useState(true);
   const [showPlotOptions, setShowPlotOptions] = useState(true);
 
-  useEffect(() => {
-    const range = calculateChartRange();
-    setChartRange(range);
-    generateChartData(range);
-  }, [distributions, lines, userXRange, userYRange]);
+  const calculateChartRange = () => {
+    let xMin, xMax, yMin, yMax;
+
+    if (userXRange.min !== '' && userXRange.max !== '') {
+      xMin = parseFloat(userXRange.min);
+      xMax = parseFloat(userXRange.max);
+    } else {
+      xMin = Math.min(...distributions.map(d => parseFloat(d.mean) - 5 * parseFloat(d.stdev)));
+      xMax = Math.max(...distributions.map(d => parseFloat(d.mean) + 5 * parseFloat(d.stdev)));
+    }
+    
+    yMin = userYRange.min !== '' ? parseFloat(userYRange.min) : 0;
+    yMax = userYRange.max !== '' ? parseFloat(userYRange.max) : 'auto';
+
+    return { xMin, xMax, yMin, yMax };
+  };
+
+  const generateChartData = (range) => {
+    const { xMin, xMax } = range;
+    const step = (xMax - xMin) / 200;
+    const data = [];
+
+    for (let x = xMin; x <= xMax; x += step) {
+      const point = { x };
+      distributions.forEach(dist => {
+        const y = normalPDF(x, parseFloat(dist.mean), parseFloat(dist.stdev));
+        point[dist.id] = y;
+      });
+      data.push(point);
+    }
+
+    setChartData(data);
+  };
   
   const handleChartTitleChange = (e) => {
     setChartTitle(e.target.value);
@@ -65,22 +93,7 @@ function NormalDistributionTable() {
     return '#' + Math.floor(Math.random()*16777215).toString(16);
   };
 
-  const calculateChartRange = () => {
-    let xMin, xMax, yMin, yMax;
 
-    if (userXRange.min !== '' && userXRange.max !== '') {
-      xMin = parseFloat(userXRange.min);
-      xMax = parseFloat(userXRange.max);
-    } else {
-      xMin = Math.min(...distributions.map(d => parseFloat(d.mean) - 5 * parseFloat(d.stdev)));
-      xMax = Math.max(...distributions.map(d => parseFloat(d.mean) + 5 * parseFloat(d.stdev)));
-    }
-    
-    yMin = userYRange.min !== '' ? parseFloat(userYRange.min) : 0;
-    yMax = userYRange.max !== '' ? parseFloat(userYRange.max) : 'auto';
-
-    return { xMin, xMax, yMin, yMax };
-  };
 
   const addRow = () => {
     const newColor = getRandomColor();
@@ -118,22 +131,11 @@ function NormalDistributionTable() {
     return (1 / (stdev * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.pow((x - mean) / stdev, 2));
   };
 
-  const generateChartData = (range) => {
-    const { xMin, xMax } = range;
-    const step = (xMax - xMin) / 200;
-    const data = [];
-
-    for (let x = xMin; x <= xMax; x += step) {
-      const point = { x };
-      distributions.forEach(dist => {
-        const y = normalPDF(x, parseFloat(dist.mean), parseFloat(dist.stdev));
-        point[dist.id] = y;
-      });
-      data.push(point);
-    }
-
-    setChartData(data);
-  };
+  useEffect(() => {
+    const range = calculateChartRange();
+    setChartRange(range);
+    generateChartData(range);
+  }, [distributions, lines, userXRange, userYRange]);
 
   const lineWidthOptions = [
     { value: 1, label: 'Thin' },

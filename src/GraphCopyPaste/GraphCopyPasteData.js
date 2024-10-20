@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Title, Legend, ReferenceLine, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ReferenceLine, ResponsiveContainer } from 'recharts';
 import './GraphCopyPasteData.css';
 import { Box } from '@mui/material';
 
@@ -19,12 +19,6 @@ function NormalDistributionTable() {
   const [showLineTable, setShowLineTable] = useState(false);
   const [showPlotOptions, setShowPlotOptions] = useState(false);
   const [sampleOrPopulation, setSampleOrPopulation] = useState('sample');
-
-  useEffect(() => {
-    const range = calculateChartRange();
-    setChartRange(range);
-    generateChartData(range);
-  }, [distributions, lines, userXRange, userYRange]);
 
   const calculateMeanAndStdDev = (data, type) => {
   
@@ -179,6 +173,12 @@ function NormalDistributionTable() {
   
     setChartData(data);
   };
+
+  useEffect(() => {
+    const range = calculateChartRange();
+    setChartRange(range);
+    generateChartData(range);
+  }, [distributions, lines, userXRange, userYRange]);
   
   const lineWidthOptions = [
     { value: 1, label: 'Thin' },

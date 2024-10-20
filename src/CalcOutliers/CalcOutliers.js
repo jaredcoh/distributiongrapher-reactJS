@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import 'katex/dist/katex.min.css';
-import { BlockMath } from 'react-katex';
 import { jStat } from 'jstat';
 import './CalcOutliers.css';
 

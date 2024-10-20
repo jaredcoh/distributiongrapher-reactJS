@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './CalcThresPercent.css'; // Import your CSS file
 import 'katex/dist/katex.min.css';
-import { BlockMath, InlineMath } from 'react-katex';
 const jStat = require('jstat'); // Make sure to install jStat library
 
 function NormalDistributionCalculator() {
@@ -18,7 +17,6 @@ function NormalDistributionCalculator() {
   const [percentInput, setPercentInput] = useState('');
   const [percentResult, setPercentResult] = useState(null);
   const [rangeType, setRangeType] = useState(''); // For selecting left, right, or middle
-  const [n, setN] = useState(''); // Number of data points
 
 
   const calculateExpectedSamples = () => {

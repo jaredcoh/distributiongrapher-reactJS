@@ -22,7 +22,6 @@ const CalcTTest = () => {
     return luminance > 0.5 ? '#000' : '#fff'; // Black for light colors, white for dark colors
   };
 
-  const [activeTab, setActiveTab] = useState('inputValues');
   const [rows, setRows] = useState([
     { datasetId: 1, label: '', mean: 0, std: 0, n: 0, color: "#000" },
     { datasetId: 2, label: '', mean: 0, std: 0, n: 0, color: "#999" }

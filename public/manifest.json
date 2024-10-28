@@ -1,24 +1,19 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Multiple Distributions Grapher",
+  "name": "Caculate and Visualize your Dataset's Basic Statistics",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "DistributionCalculatorLogoBlack.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "DistributionCalculatorLogoBlack.png",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "500x500"
     }
   ],
-  "start_url": ".",
+  "start_url": "/home",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

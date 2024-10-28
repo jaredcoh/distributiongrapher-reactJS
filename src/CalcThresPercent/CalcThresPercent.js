@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './CalcThresPercent.css'; // Import your CSS file
 import 'katex/dist/katex.min.css';
 const jStat = require('jstat'); // Make sure to install jStat library
 
@@ -17,14 +16,19 @@ function NormalDistributionCalculator() {
   const [percentInput, setPercentInput] = useState('');
   const [percentResult, setPercentResult] = useState(null);
   const [rangeType, setRangeType] = useState(''); // For selecting left, right, or middle
+  const [probability, setProbability] = useState(null);
 
 
   const calculateExpectedSamples = () => {
-    const probabilityValue = parseFloat(result?.match(/[\d.]+/g)[0]); // Extract the probability value from the result
+    if (!probability || !totalSamples) {
+      setExpectedSamples('Please calculate a probability first and enter total samples.');
+      return;
+    }
+
     const total = parseInt(totalSamples, 10);
     
-    if (!isNaN(probabilityValue) && !isNaN(total) && total > 0) {
-      const expected = Math.round(probabilityValue * total);
+    if (!isNaN(total) && total > 0) {
+      const expected = Math.round(probability * total);
       setExpectedSamples(`Approximately ${expected} of ${total} samples will fall in the defined range.`);
     } else {
       setExpectedSamples('Please enter a valid number of total samples.');
@@ -49,13 +53,13 @@ function NormalDistributionCalculator() {
       case 'left':
         // Find the upper bound for which the cumulative distribution function (CDF) equals percent
         upperBound = avg + jStat.normal.inv(percent, 0, stDev); // Z-score for left-side coverage
-        setPercentResult(`${percent * 100}% of values in this dataset will be less than ${upperBound.toFixed(4)}`);
+        setPercentResult(`${percent * 100}% of values in this dataset will be less than ${formatNumber(upperBound)}`);
         break;
   
       case 'right':
         // Find the lower bound for which the cumulative distribution function (CDF) equals 1 - percent
         lowerBound = avg + jStat.normal.inv(1 - percent, 0, stDev); // Z-score for right-side coverage
-        setPercentResult(`${percent * 100}% of values in this dataset will be greater than ${lowerBound.toFixed(4)}`);
+        setPercentResult(`${percent * 100}% of values in this dataset will be greater than ${formatNumber(lowerBound)}`);
         break;
   
       case 'symmetric':
@@ -63,13 +67,23 @@ function NormalDistributionCalculator() {
         const zScore = jStat.normal.inv((1 - percent) / 2, 0, 1); // Z-score corresponding to the given percent
         lowerBound = avg + (zScore * stDev); // Lower bound
         upperBound = avg - (zScore * stDev); // Upper bound
-        setPercentResult(`${percent * 100}% of values in this dataset will be between ${lowerBound.toFixed(4)} and ${upperBound.toFixed(4)}.`);
+        setPercentResult(`${percent * 100}% of values in this dataset will be between ${formatNumber(lowerBound)} and ${formatNumber(upperBound)}.`);
         break;
   
       default:
         setPercentResult('Please select a range type.');
         return;
     }
+  };
+
+  const formatNumber = (probability) => {
+    if (probability < 0.0001 || probability > 100000) {
+      return probability.toExponential(4);
+    }
+    if (Math.abs(Math.round(probability) - probability) < Number.EPSILON) {
+      return Math.round(probability).toString();
+    }
+    return probability.toFixed(4);
   };
   
   const calculateProbability = () => {
@@ -79,6 +93,7 @@ function NormalDistributionCalculator() {
     if (isNaN(avg) || isNaN(stDev) || stDev <= 0) {
       setResult('Please enter valid mean and standard deviation values.');
       setOccurrenceRate(null);
+      setProbability(null);
       return;
     }
 
@@ -96,43 +111,41 @@ function NormalDistributionCalculator() {
 
     switch (thresholdType) {
       case 'lower':
-          probability = 1 - standardNormalCDF(calculateZ(lowerBound));
-          break;
+        probability = 1 - standardNormalCDF(calculateZ(lowerBound));
+        boundDescription = `greater than ${lowerBound}`;
+        break;
       case 'upper':
-          probability = standardNormalCDF(calculateZ(upperBound));
-          break;
-      case 'both':
-          probability = standardNormalCDF(calculateZ(upperBound)) - standardNormalCDF(calculateZ(lowerBound));
-          break;
+        probability = standardNormalCDF(calculateZ(upperBound));
+        boundDescription = `less than ${upperBound}`;
+        break;
+      case 'between':
+        probability = standardNormalCDF(calculateZ(upperBound)) - standardNormalCDF(calculateZ(lowerBound));
+        boundDescription = `between ${lowerBound} and ${upperBound}`;
+        console.log(probability);
+        break;
       default:
-          setResult('Please select a threshold type.');
-          return;
-  }
+        setResult('Please select a threshold type.');
+        setProbability(null);
+        return;
+    }
 
-    setResult(`The probability is approximately ${probability.toFixed(4)}`);
+    setResult(`The probability is approximately ${formatNumber(probability)}`);
     
     let occurrenceRateText;
     if (probability > 0.5) {
-        let occurrences = Math.round(probability * 100); // Starting with a larger scale
-        let totalSamples = Math.round(100 / probability);
-        
-        while (occurrences / totalSamples > 0.95) {
-            occurrences -= 1; // Decrease occurrences
-            totalSamples = Math.round(100 / (occurrences / 100)); // Adjust total samples
-        }
-
-        occurrenceRateText = `${occurrences} in every ${totalSamples} samples will be ${boundDescription}.`;
+      let occurrences=Math.round(probability * 1000); // Starting with a larger scale
+      occurrenceRateText = `${formatNumber(occurrences)} in every ${formatNumber(1000)} samples will be ${boundDescription}.`;
     } else {
         const inverseRate = Math.round(1 / probability);
-        occurrenceRateText = `1 in every ${inverseRate} samples will be ${boundDescription}.`;
+        occurrenceRateText = `1 in every ${formatNumber(inverseRate)} samples will be ${boundDescription}.`;
     }
-    
+    setProbability(probability);
     setOccurrenceRate(occurrenceRateText);
   };
 
   return (
     <div className="calculator-container">
-      <h2>Normal Distribution Calculator</h2>
+      <h2>Thresholds and Percentages</h2>
       <p>Enter the mean and standard deviation of the distribution, and choose between thresholds or percentages.</p>
       <div className="input-group">
         <label className="label-thres-percent" htmlFor="mean">Mean (μ):</label>
@@ -174,9 +187,10 @@ function NormalDistributionCalculator() {
               value={thresholdType}
               onChange={(e) => setThresholdType(e.target.value)}
             >
+              <option value="" disabled>Select Threshold Type</option>
               <option value="lower">P(x &gt; a)</option>
               <option value="upper">P(x &lt; b)</option>
-              <option value="both">P(a &lt; x &lt; b)</option>
+              <option value="between">P(a &lt; x &lt; b)</option>
             </select>
           </div>
           {thresholdType && (

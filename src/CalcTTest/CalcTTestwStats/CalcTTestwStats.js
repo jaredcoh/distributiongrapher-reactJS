@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './CalcTTestwStats.css';
 import jStat from 'jstat';
 import 'katex/dist/katex.min.css';
 import { BlockMath, InlineMath } from 'react-katex';

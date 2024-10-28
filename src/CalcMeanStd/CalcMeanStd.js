@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './CalcMeanStd.css'; // Import your CSS file
 import 'katex/dist/katex.min.css';
 import { BlockMath } from 'react-katex';
 
@@ -216,63 +215,6 @@ function MeanAndStdDev() {
       </table>
       <div className="add-row-button-container">
             <button onClick={addRow} title="Add row" className="add-row-button">Add Row</button>
-      </div>
-
-      {/* Explanation Section */}
-      <div className="explanation-container">
-        <h3>How to Calculate</h3>
-        <hr />
-        <div className="explanation-section">
-          <h4>N (Count)</h4>
-          <p>The number of values entered.</p>
-          <BlockMath math="N = \text{Count of Values}" />
-          <p>In Excel/Sheets: Use <code>=COUNT(range)</code>.</p>
-        </div>
-
-        <hr />
-
-        <div className="explanation-section">
-          <h4>[Arithmetic] Mean</h4>
-          <p>The average of the dataset, calculated by the sum divided by the count</p>
-          <BlockMath math="\text{Mean} = \frac{\sum_{i=1}^{N} x_i}{N}" />
-          <p>In Excel/Sheets: Use <code>=AVERAGE(range)</code>.</p>
-        </div>
-
-        <hr />
-
-        <div className="explanation-section">
-          <h4>Sample Standard Deviation</h4>
-          <p>Sample: a subset of a larger population</p>
-          <p>A measure of the amount of variation or dispersion of a set of values.</p>
-          <BlockMath math="s = \sqrt{\frac{\sum_{i=1}^{N} (x_i - \bar{x})^2}{N-1}}" />
-          <p>In Excel/Sheets: Use <code>=STDEV.S(range)</code>.</p>
-        </div>
-        <hr />
-        <div className="explanation-section">
-          <h4>Sample Variance</h4>
-          <p>Sample Variance can be calculated by squaring the sample standard deviation.</p>
-          <BlockMath math="s^2 = \frac{\sum_{i=1}^{N} (x_i - \bar{x})^2}{N-1}" />
-          <p>In Excel/Sheets: Use <code>=VAR.S(range)</code>.</p>
-        </div>
-
-        <hr />
-
-        <div className="explanation-section">
-          <h4>Population Standard Deviation</h4>
-          <p>Population: the entire population</p>
-          <p>A measure of the dispersion of a set of values in a population.</p>
-          <BlockMath math="\sigma = \sqrt{\frac{\sum_{i=1}^{N} (x_i - \mu)^2}{N}}" />
-          <p>In Excel/Sheets: Use <code>=STDEV.P(range)</code>.</p>
-        </div>
-        
-        <hr />
-
-        <div className="explanation-section">
-          <h4>Population Variance</h4>
-          <p>Population Variance can be calculated by squaring the population standard deviation.</p>
-          <BlockMath math="\sigma^2 = \frac{\sum_{i=1}^{N} (x_i - \mu)^2}{N}" />
-          <p>In Excel/Sheets: Use <code>=VAR.P(range)</code>.</p>
-        </div>
       </div>
     </div>
   );

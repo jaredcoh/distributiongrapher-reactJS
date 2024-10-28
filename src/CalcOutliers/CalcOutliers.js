@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import 'katex/dist/katex.min.css';
 import { jStat } from 'jstat';
-import './CalcOutliers.css';
 
 // Helper functions for calculations
 const calculateMean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
@@ -48,7 +47,6 @@ const formatWithSignificantFigures = (number, sigFigs) => {
 // Main Outliers Test Component
 const OutliersTest = () => {
   const [data, setData] = useState('');
-  const [delimiter, setDelimiter] = useState(',');
   const [confidence, setConfidence] = useState(95);
   const [isSample, setIsSample] = useState(true);
   const [calcVariance, setCalcVariance] = useState(false);
@@ -59,13 +57,18 @@ const OutliersTest = () => {
 
   // Handler functions for user input
   const handleDataChange = (e) => setData(e.target.value);
-  const handleDelimiterChange = (e) => setDelimiter(e.target.value);
   const handleConfidenceChange = (e) => setConfidence(Number(e.target.value));
   const handleSampleChange = (value) => setIsSample(value === 'sample');
   const handleCalcVarianceChange = (value) => setCalcVariance(value === 'variance');
 
   const processInput = () => {
-    let dataArr = data.split(delimiter).map(Number);
+    let dataArr = data
+      .split(/[\s,\n\t]+/) // Split by any combination of spaces, commas, newlines, or tabs
+      .map(val => val.trim()) // Trim whitespace
+      .filter(val => val !== '') // Remove empty strings
+      .map(Number) // Convert to numbers
+      .filter(val => !isNaN(val)); // Remove any invalid numbers
+
   
     // Calculate initial statistics
     const initialMean = calculateMean(dataArr);
@@ -159,14 +162,6 @@ const OutliersTest = () => {
           cols={50}
         />
         <div className="input-controls">
-          <label className="input-label">
-            Delimiter:
-            <select className="input-select" value={delimiter} onChange={handleDelimiterChange}>
-              <option value=",">Comma</option>
-              <option value=" ">Whitespace</option>
-              <option value=".">Period</option>
-            </select>
-          </label>
           <label className="input-label">
             Confidence Level (%):
             <input 

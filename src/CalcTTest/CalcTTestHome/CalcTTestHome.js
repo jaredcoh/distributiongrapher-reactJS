@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './CalcTTestHome.css';
 import CalcTTestwData from '../CalcTTestwData/CalcTTestwData.js';
 import CalcTTestwStats from '../CalcTTestwStats/CalcTTestwStats.js';
 import 'katex/dist/katex.min.css';
@@ -9,6 +8,7 @@ const CalcTTestHome = () => {
   
   return (
     <div className='t-test-container'>
+      <h2>T-Test Calculator</h2>
       <div className='tabs'>
         <button onClick={() => setActiveTab('inputValues')} className={activeTab === 'inputValues' ? 'active' : ''}>
           Input Mean, STDev, N for Unpaired T-Tests

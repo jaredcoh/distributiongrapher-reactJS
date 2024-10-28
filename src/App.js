@@ -8,6 +8,7 @@ import CalcMeanStd from './CalcMeanStd/CalcMeanStd';
 import CalcTTestHome from './CalcTTest/CalcTTestHome/CalcTTestHome';
 import CalcThresPercent from './CalcThresPercent/CalcThresPercent';
 import CalcOutliers from './CalcOutliers/CalcOutliers';
+import HomePage from './Home/Home'
 function AppContent() {
   const [showDropdown, setShowDropdown] = useState({ plot: false, calculate: false });
   const location = useLocation(); // Get current location
@@ -25,13 +26,13 @@ function AppContent() {
   };
 
   const subtitleMap = {
-    '/graph-mean-std-dev': 'Plot Datasets using their Means and Standard Deviations',
-    '/graph-copy-paste-data': 'Plot by Copying/Pasting Datapoints',
-    '/calc-mean-std': "Calculate Datasets' Means and Standard Deviations",
-    '/calc-ttest': 'Calculate T-Test Matrix',
+    '/graph-mean-stdev': 'Plot Datasets using their Means and Standard Deviations',
+    '/graph-data': 'Plot by Copying/Pasting Datapoints',
+    '/calc-mean-stdev': "Calculate Datasets' Means and Standard Deviations",
+    '/ttest-matrix': 'Calculate T-Test Matrix',
     '/calc-thres-percent': "Calculate Datasets' Thresholds and Percentages",
     '/home': 'Homepage',
-    '/calc-outliers': 'Recursively Calculate and Eliminate Outliers for a Dataset',
+    '/elim-outliers': 'Recursively Calculate and Eliminate Outliers for a Dataset',
   };
 
   // Get the subtitle based on the current path
@@ -40,14 +41,15 @@ function AppContent() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="header-content">
-          <img src={distributionImage} alt="Normal Distribution" className="header-image" />
-          <div className="title-container">
-            <h1 className="header-title">Multiple Normal Distributions Grapher</h1>
-            {subtitle && <p className="header-subtitle">{subtitle}</p>}
+        <Link to="/home" className="header-link">
+          <div className="header-content">
+            <img src={distributionImage} alt="Normal Distribution" className="header-image" />
+            <div className="title-container">
+              <h1 className="header-title">Multiple Normal Distributions Grapher</h1>
+              {subtitle && <p className="header-subtitle">{subtitle}</p>}
+            </div>
           </div>
-        </div>
-        <p className="author">Jared Cohen</p>
+        </Link>
       </header>
       
       <div className="top-bar">
@@ -69,14 +71,14 @@ function AppContent() {
         <div className={`dropdown-bar open`}>
         <div className="dropdown-links">
           <Link
-            to="/graph-mean-std-dev"
+            to="/graph-mean-stdev"
             title="Plot a distribution using Mean and Standard Deviation"
             className="dropdown-link"
           >
             Plot via Mean and Standard Deviation
           </Link>
           <Link
-            to="/graph-copy-paste-data"
+            to="/graph-data"
             title="Plot a distribution by copy/pasting datapoints into a textbox"
             className="dropdown-link"
           >
@@ -89,13 +91,13 @@ function AppContent() {
       {showDropdown.calculate && (
         <div className={`dropdown-bar open`}>
         <Link 
-          to="/calc-mean-std" 
+          to="/calc-mean-stdev" 
           title="Calculate the mean and sample/population standard deviation for a dataset"
           className="dropdown-link">
           Calculate Mean and Standard Deviations
         </Link>
         <Link 
-          to="/calc-ttest" 
+          to="/ttest-matrix" 
           title="Perform a T-Test on multiple datasets to compare"
           className="dropdown-link">
           Calculate T-Test Matrix
@@ -107,23 +109,43 @@ function AppContent() {
           Calculate Threshold and Percentages
         </Link>
         <Link 
-          to="/calc-outliers" 
+          to="/elim-outliers" 
           title="Calculate outliers with with %confidence"
           className="dropdown-link">
           Calculate Dataset Outliers
         </Link>
       </div>
+      
       )}
 
       {/* Define routes for each option */}
       <Routes>
-        <Route path="/graph-mean-std-dev" element={<GraphMeanAndStdDev />} />
-        <Route path="/graph-copy-paste-data" element={<GraphCopyPasteData />} />
-        <Route path="/calc-mean-std" element={<CalcMeanStd />} />
-        <Route path="/calc-ttest" element={<CalcTTestHome />} />
+        <Route path="/graph-mean-stdev" element={<GraphMeanAndStdDev />} />
+        <Route path="/graph-data" element={<GraphCopyPasteData />} />
+        <Route path="/calc-mean-stdev" element={<CalcMeanStd />} />
+        <Route path="/ttest-matrix" element={<CalcTTestHome />} />
         <Route path="/calc-thres-percent" element={<CalcThresPercent />} />
-        <Route path="/calc-outliers" element={<CalcOutliers />} />
+        <Route path="/elim-outliers" element={<CalcOutliers />} />
+        <Route path="/home" element={<HomePage/>} />
       </Routes>
+
+      <footer className="app-footer">
+        <p>
+          <a href="https://www.jaredscottcohen.com" target="_blank" rel="noopener noreferrer">
+            Website by Jared Cohen (learn more about me here!)
+          </a>
+        </p>
+        <p>
+          <a href="mailto:jaredscohen2000@gmail.com?subject=Grapher%20Website%20-%20Bug/Issue">
+            Report a Bug
+          </a>
+        </p>
+        <p>
+          <a href="mailto:jaredscohen2000@gmail.com?subject=Grapher%20Website%20-%20Feature%20Request">
+            Request a Feature
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }

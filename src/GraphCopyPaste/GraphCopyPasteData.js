@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ReferenceLine, ResponsiveContainer } from 'recharts';
-import './GraphCopyPasteData.css';
 import { Box } from '@mui/material';
+import {calculateMeanAndStdDev,generateChartData,getRandomColor, calculateChartRange, lineWidthOptions, lineTypeOptions} from '../graphingUtils.js';
 
 function NormalDistributionTable() {
   const [distributions, setDistributions] = useState([
@@ -10,7 +10,7 @@ function NormalDistributionTable() {
   const [userXRange, setUserXRange] = useState({ min: '', max: '' });
   const [userYRange, setUserYRange] = useState({ min: '', max: '' });
   const [lines, setLines] = useState([]);
-  const [chartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState([])
   const [rangeError, setRangeError] = useState({ x: '', y: '' });
   const [chartRange, setChartRange] = useState({ xMin: 0, xMax: 0, yMin: 0, yMax: 0 });
   const [chartTitle, setChartTitle] = useState(''); // New state for chart title
@@ -19,25 +19,6 @@ function NormalDistributionTable() {
   const [showLineTable, setShowLineTable] = useState(false);
   const [showPlotOptions, setShowPlotOptions] = useState(false);
   const [sampleOrPopulation, setSampleOrPopulation] = useState('sample');
-
-  const calculateMeanAndStdDev = (data, type) => {
-  
-    // Split the trimmed string and convert to numbers
-    const numbers = data.trim().replace(/[,\s]+$/, '').split(/[,\s]+/).map(Number).filter(n => !isNaN(n));
-  
-    if (numbers.length === 0) return { average: 'NaN', stdDev: 'NaN' };
-  
-    const mean = numbers.reduce((a, b) => a + b, 0) / numbers.length;
-    
-    // Calculate variance
-    const squareDiffs = numbers.map(value => Math.pow(value - mean, 2));
-    const avgSquareDiff = type === 'sample' 
-      ? squareDiffs.reduce((a, b) => a + b, 0) / (numbers.length - 1)  // Sample variance formula
-      : squareDiffs.reduce((a, b) => a + b, 0) / numbers.length;        // Population variance formula
-  
-    const stdDev = Math.sqrt(avgSquareDiff);
-    return { mean, stdDev };
-  };
 
   const handleSampleOrPopulationChange = (value) => {
 
@@ -56,7 +37,6 @@ function NormalDistributionTable() {
   };
   
   const handleChartTitleChange = (e) => {
-
     setChartTitle(e.target.value);
   };
 
@@ -80,47 +60,22 @@ function NormalDistributionTable() {
       setUserYRange(newRange);
     }
 
-    validateRange(axis, newRange);
-  };
-  const validateRange = (axis, range) => {
-    const min = parseFloat(range.min);
-    const max = parseFloat(range.max);
+    const min = parseFloat(newRange.min);
+    const max = parseFloat(newRange.max);
     
-    if (range.min !== '' && range.max !== '' && !isNaN(min) && !isNaN(max) && min >= max) {
+    if (min !== '' && max !== '' && !isNaN(min) && !isNaN(max) && min >= max) {
       setRangeError({ ...rangeError, [axis]: 'Min must be less than Max' });
     } else {
       setRangeError({ ...rangeError, [axis]: '' });
     }
   };
 
-  const getRandomColor = () => {
-    return '#' + Math.floor(Math.random()*16777215).toString(16);
-  };
-
-  const calculateChartRange = () => {
-    let xMin, xMax, yMin, yMax;
-
-    if (userXRange.min !== '' && userXRange.max !== '') {
-      xMin = parseFloat(userXRange.min);
-      xMax = parseFloat(userXRange.max);
-    } else {
-      xMin = Math.min(...distributions.map(d => parseFloat(d.average) - 5 * parseFloat(d.stdDev)));
-      xMax = Math.max(...distributions.map(d => parseFloat(d.average) + 5 * parseFloat(d.stdDev)));
-    }
-    
-    yMin = userYRange.min !== '' ? parseFloat(userYRange.min) : 0;
-    yMax = userYRange.max !== '' ? parseFloat(userYRange.max) : 'auto';
-
-    return { xMin, xMax, yMin, yMax };
-  };
   const addRow = () => {
-    const newColor = getRandomColor();
-    setDistributions([...distributions, { mean: 0, stdev: 1, label: '', color: newColor, id: distributions.length + 1, lineWidth: 2, lineType: 'solid' }]);
+    setDistributions([...distributions, { mean: '', stdev: '', label: '', color: getRandomColor(), id: distributions.length + 1, lineWidth: 2, lineType: 'solid' }]);
   };
 
   const removeRow = (id) => {
-    const updatedDistributions = distributions.filter(dist => dist.id !== id);
-    setDistributions(updatedDistributions);
+    setDistributions(distributions.filter(dist => dist.id !== id));
   };
 
   const addLine = () => {
@@ -133,7 +88,6 @@ function NormalDistributionTable() {
   const handleInputChange = (index, field, value) => {
     const newDistributions = [...distributions];
     newDistributions[index][field] = value;
-  
     if (field === 'data') {
       const { mean, stdDev } = calculateMeanAndStdDev(value, sampleOrPopulation); // Use the correct type (sample/population)
       newDistributions[index].average = mean.toFixed(2);
@@ -148,53 +102,18 @@ function NormalDistributionTable() {
     newLines[index][field] = value;
     setLines(newLines);
   };
-  const normalPDF = (x, mean, stdev) => {
-    return (1 / (stdev * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.pow((x - mean) / stdev, 2));
-  };
 
-  const generateChartData = (range) => {
-    const { xMin, xMax } = range;
-
-    const data = [];
-  
-    for (let x = xMin; x <= xMax; x += (xMax - xMin) / 50) {
-      const point = { x };
-  
-      distributions.forEach(dist => {
-        if (!isNaN(parseFloat(dist.average)) && !isNaN(parseFloat(dist.stdDev))) {  // Ensure valid numbers
-          
-          const y = normalPDF(x, parseFloat(dist.average), parseFloat(dist.stdDev));
-          point[dist.id] = y;
-        }
-      });
-  
-      data.push(point);
-    }
-  
-    setChartData(data);
-  };
 
   useEffect(() => {
-    const range = calculateChartRange();
+    const range = calculateChartRange(userXRange, userYRange, distributions);
     setChartRange(range);
-    generateChartData(range);
+    setChartData(generateChartData(range, distributions));
   }, [distributions, lines, userXRange, userYRange]);
   
-  const lineWidthOptions = [
-    { value: 1, label: 'Thin' },
-    { value: 2, label: 'Normal' },
-    { value: 3, label: 'Thick' },
-    { value: 4, label: 'Very Thick' }
-  ];
-
-  const lineTypeOptions = [
-    { value: 'solid', label: 'Solid' },
-    { value: 'dashed', label: 'Dashed' },
-    { value: 'dotted', label: 'Dotted' }
-  ];
 
   return (
-    <><div className="distribution-table-container">
+    <>
+    <div className="distribution-table-container">
       <h2>Nomral Distribution Curves</h2>
       <table className="distribution-table">
         <thead>
@@ -453,8 +372,10 @@ function NormalDistributionTable() {
         </>
         )}
       </div>
+      <hr />
       <div className="plot-container">
-        <hr />
+
+        
         <div className="plot-image-container">
           <Box
             marginBottom={"40px"}
@@ -524,8 +445,8 @@ function NormalDistributionTable() {
               </LineChart>
             </ResponsiveContainer>
           </Box>
-          <span className="axis-label">(Screenshot this (Prnt Screen or Win+Shft+S or Cmd + Shift + 4) and save/paste in a secure location for future reference!)</span>  
         </div>
+        <span className="axis-label">(Screenshot this (Prnt Screen or Win+Shft+S or Cmd + Shift + 4) and save/paste in a secure location for future reference!)</span>  
       </div></>
   );
 }

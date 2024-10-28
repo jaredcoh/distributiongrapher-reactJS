@@ -75,8 +75,25 @@
   transition: transform 0.3s ease;
 }
 
+.bar-option:hover {
+  background: linear-gradient(135deg, #7a7a7a, #969696); /* Gradient direction and colors */
+  -webkit-background-clip: text; /* Ensures gradient is applied to the text */
+  -webkit-text-fill-color: transparent;
+}
+
+.bar-option:active {
+  text-decoration: underline; /* Optionally, underline on hover */
+  background: linear-gradient(135deg, #93c4fb, #ce9dff); /* Gradient direction and colors */
+  -webkit-background-clip: text; /* Ensures gradient is applied to the text */
+  -webkit-text-fill-color: transparent;
+}
+
 .bar-option.selected {
   text-decoration: underline;
+  font-weight: bold;
+  background: linear-gradient(135deg, #bae9ff, #fff); /* Gradient direction and colors */
+  -webkit-background-clip: text; /* Ensures gradient is applied to the text */
+  -webkit-text-fill-color: transparent;
 }
 
 .bar-option .arrow.active {
@@ -121,8 +138,1210 @@
   text-decoration: none; /* Remove underline */
   padding: 0px 20px; /* Adjust padding as needed */
   margin: 0px 20px; /* Add spacing between links */
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .dropdown-bar a:hover {
+  background: linear-gradient(135deg, #444, #000); /* Gradient direction and colors */
+  -webkit-background-clip: text; /* Ensures gradient is applied to the text */
+  -webkit-text-fill-color: transparent;
+}
+
+.dropdown-bar a:active {
   text-decoration: underline; /* Optionally, underline on hover */
+  background: linear-gradient(135deg, #270076, #005a9f); /* Gradient direction and colors */
+  -webkit-background-clip: text; /* Ensures gradient is applied to the text */
+  -webkit-text-fill-color: transparent;
+}
+.app-footer {
+  text-align: center;
+  margin-top: 0px;
+  padding: 0px;
+  background-color: #222;
+  position: absolute;
+  width: 100%;
+}
+
+.app-footer a {
+  color: #f1f1f1;
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
+.header-link {
+  text-decoration: none;  /* Removes underline */
+  color: inherit;         /* Ensures the text color stays the same */
+  display: block;         /* Makes the entire header area clickable */
+}
+.outliers-container {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.outliers-title {
+  color: #333;
+  text-align: center;
+}
+
+.input-section {
+  margin-bottom: 20px;
+}
+
+.data-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  font-size: 16px;
+}
+
+.input-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.input-select, .input-number {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.process-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.process-button:hover {
+  background-color: #0056b3;
+}
+
+.results-section {
+  background-color: #f9f9f9;
+  padding: 10px 20px 20px 20px; /* top, right, bottom, left */
+  border-radius: 4px;
+}
+
+.results-title {
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.stats-comparison {
+  display: flex;
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  margin-bottom: 20px;
+  gap: 10px; /* Optional: Adjust the space between the items */
+}
+
+.stats-box {
+  width: 30%; /* Set to desired percentage */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid #ccc; /* Optional: Add a border for visibility */
+  margin: 0 30px; /* Adjust this value to your liking */
+}
+
+.stats-box.before {
+  background-color: #e6f3ff;
+}
+
+.stats-box.after {
+  background-color: #e6ffe6;
+}
+
+.arrow {
+  font-size: 48px;
+  color: #000000;
+}
+
+.stats-title {
+  margin-top: 0;
+  color: #333;
+}
+
+
+.run-results {
+  margin-bottom: 30px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.run-title {
+  color: #464646;
+  font-size: large;
+  text-align: center; /* Center text horizontally */
+  margin:10px;
+  text-decoration: underline;
+}
+
+.stats-container {
+  display: flex; /* Ensures elements are on the same line */
+  align-items: center; /* Aligns items vertically in the center */
+  justify-content: center;
+}
+
+.stats-item {
+  margin-right: 100px; /* Adjust this value to control the space between items */
+}
+
+/* Optional: Remove margin from the last item */
+.stats-item:last-child {
+  margin-right: 0; /* Ensures no extra space after the last item */
+}
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.results-table th, .results-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.results-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.outlier-row {
+  background-color: #ffeeee;
+}
+
+/* CalcMeanStd.css */
+
+.mean-std-dev-container {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mean-std-dev-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.mean-std-dev-table th,
+.mean-std-dev-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.mean-std-dev-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.mean-std-dev-table input[type="text"],
+.mean-std-dev-table textarea,
+.mean-std-dev-table select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.mean-std-dev-table textarea {
+  resize: vertical;
+}
+
+.remove-row-button,
+.add-row-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.remove-row-button {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.remove-row-button:hover {
+  background-color: #ff3333;
+}
+
+.add-row-button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.add-row-button {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+}
+
+.add-row-button:hover {
+  background-color: #45a049;
+}
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
+
+.calculator-container {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.input-group {
+  margin-bottom: 15px;
+}
+.label-thres-percent {
+  display: block;
+  margin-bottom: 5px;
+}
+.input-thres-percent, .select-thres-percent {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.calc-prob-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.calc-prob-button:hover {
+  background-color: #45a049;
+}
+.result {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  text-align: center;
+}
+.calc-samples{
+  width: 35%;
+  padding: 10px;
+  margin-top:20px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.input-samples{
+  padding-top:20px;
+}
+.explanation{
+  margin-top: 50px;
+}
+/* Container */
+.distribution-table-container {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  background-color: #f8f9fa;
+  width:800px;
+  display: block;
+  margin: 10px auto;
+}
+
+/* Title */
+.distribution-title {
+  color: #333;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Table styling */
+.distribution-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.distribution-table th, .distribution-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.distribution-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: center;
+}
+
+.distribution-table td {
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.table-header-row th {
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* Row removal button */
+.remove-row-button {
+  background-color: #f44336; /* Red color */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.remove-row-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Form inputs */
+.color-picker {
+  width: 100%;
+  padding: 3px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.input-label, .input-mean, .input-stdev {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect the width */
+}
+
+.input-label {
+  font-size: 14px;
+}
+
+/* Buttons */
+.add-row-button, .add-line-button {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.add-row-button:hover, .add-line-button:hover {
+  background-color: #0056b3;
+}
+
+/* Plot image placeholder */
+.plot-image-container {
+  margin: auto;
+  border: 3px solid #000000;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  width:800px;
+  display: block;
+}
+
+.plot-image-container p {
+  color: #666;
+  font-size: 18px;
+}
+
+/* Optional: Highlighting row */
+.highlighted-row {
+  background-color: #ffeeee;
+}
+.plot-button {
+  padding: 15px;
+  font-size: 18px;
+  background-color: #5b3700; /* Orange color */
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.plot-button:hover {
+  background-color: #7e4c00;
+}
+
+.line-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+}
+
+.line-table th, .line-table td {
+  font-size: 12px; /* Smaller text */
+  padding: 4px;    /* Smaller padding */
+  
+}
+
+.remove-line-button {
+  background-color: #f44336; /* Red color */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.remove-line-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+.line-table .input-label{
+  width: 100px;
+}
+.range-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.range-label {
+  font-size: 16px;
+  color: #555;
+}
+
+.range-inputs {
+  display: flex;
+  justify-content: space-between; /* Space between the X and Y ranges */
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif; /* Ensures consistent font */
+  flex-wrap: nowrap; /* Prevent wrapping to a new line */
+}
+
+.x-range, .y-range {
+  display: flex; /* Use flexbox for inline label and inputs */
+  align-items: center; /* Vertically center elements */
+  margin-right: 20px; /* Space between the two range groups */
+}
+
+.x-range label, .y-range label {
+  font-size: 16px;
+  color: #555;
+  margin-right: 10px; /* Space between label and input */
+}
+
+.input-x-range, .input-y-range {
+  width: 100px; /* Fixed width for inputs */
+  padding: 10px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+  margin-right: 10px; /* Space between input fields */
+}
+
+.input-x-range:focus, .input-y-range:focus {
+  border-color: #0056b3; /* Darker blue on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Optional: Adjust last input margin */
+.input-x-range:last-child, .input-y-range:last-child {
+  margin-right: 0; /* Remove right margin for the last input */
+}
+/* Toggle Line Table Button */
+.toggle-line-table-button {
+  padding: 10px 15px;
+  background-color: #007bff; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px; /* Space below */
+}
+
+.toggle-line-table-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Line Table Container */
+.line-table-container {
+  margin: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  background-color: #f8f9fa;
+  width:800px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  padding: auto;
+}
+
+/* Table Styling */
+.line-table {
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.line-table th, .line-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.line-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.line-table td {
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* Additional styles for buttons within the table */
+.remove-line-button {
+  background-color: #f44336; /* Red color */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.remove-line-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Table Styling */
+.line-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.line-table th, .line-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.line-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.line-table td {
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* Additional styles for buttons within the table */
+.remove-line-button {
+  background-color: #f44336; /* Red color */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.remove-line-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+.range-inputs {
+  margin-right: 8px;
+}
+
+.axis-label {
+  font-size: 12px; /* Smaller text size */
+  vertical-align: top; /* Align it closer to the bottom */
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.range-input {
+  display: flex;
+  justify-content: space-between; /* Space between the X and Y ranges */
+  margin-top: 10px;
+  font-family: Arial, sans-serif; /* Ensures consistent font */
+  flex-wrap: nowrap; /* Prevent wrapping to a new line */
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.plot-options-container {
+    margin: 10px auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    width:800px;
+    display: block;
+}
+
+.plot-options h2 {
+  color: #343a40;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.plot-options h3 {
+  color: #495057;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+
+.input-chart-title,
+.range-input {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.input-chart-title:focus,
+.range-input:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
+
+/* Container for the toggle buttons */
+
+/* Base styles for the toggle buttons */
+.toggle-button {
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ffffff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.line-table-header {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.line-table-header h2 {
+  margin-right: 15px;
+}
+
+.plot-options-header {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.plot-options-header h2 {
+  margin-right: 15px;
+}
+
+
+.calculator-container {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.input-group {
+  margin-bottom: 15px;
+}
+.label-thres-percent {
+  display: block;
+  margin-bottom: 5px;
+}
+.input-thres-percent, .select-thres-percent {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.calc-prob-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.calc-prob-button:hover {
+  background-color: #45a049;
+}
+.result {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  text-align: center;
+}
+.calc-samples{
+  width: 35%;
+  padding: 10px;
+  margin-top:20px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.input-samples{
+  padding-top:20px;
+}
+.explanation{
+  margin-top: 50px;
+}
+.t-test-container {
+  padding: 20px 6% 20px 20px; /* Add padding around the entire component */
+  background-color: #f9f9f9; /* Light grey background */
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #7a0101; /* Add a bottom border to the tabs */
+  color: black;
+}
+
+.tabs button {
+  margin-right: 10px;
+  padding: 10px 20px; /* Add padding for a more button-like appearance */
+  border: none;
+  background-color: #f3f3f3; /* Default background color */
+  cursor: pointer;
+  border-radius: 5px 5px 0 0; /* Rounded corners on the top */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+}
+
+.tabs button.active {
+  background-color: #c7c7c7; /* Change the active tab background */
+  font-weight: bold;
+  border: 2px solid #ccc; /* Add a border to active tab for emphasis */
+  border-bottom: 2px solid #7a0101; /* Prevent the border from overlapping the content */
+  color: black;
+}
+
+.tabs button:hover {
+  background-color: #d0d0d0; /* Slightly darker background on hover */
+  color: black;
+}
+.t-test-container {
+  padding: 20px 6% 20px 20px; /* Add padding around the entire component */
+  background-color: #f9f9f9; /* Light grey background */
+}
+
+.t-test-table {
+  border-collapse: collapse;
+  width: 100%; /* Make the table take full width */
+  margin-top: 20px; /* Space above the table */
+  background-color: #f3f3f3; /* Light grey background */
+}
+
+.t-test-table th,
+.t-test-table td {
+  border: 1px solid #ccc;
+  padding: 5px; /* Consistent padding for table cells */
+  text-align: left; /* Default text alignment */
+}
+
+.t-test-table th {
+  background-color: #c7c7c7; /* Light background for header */
+  vertical-align: bottom; /* Align cell text to the bottom */
+}
+
+.t-test-table td input {
+  width: 95%; /* Set width to 95% for inputs */
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.remove-row-button,
+.add-row-button, 
+.calculate-button {
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 15px; /* Rounded corners */
+  font-size: 15px; /* Adjust the size as needed */
+  font-weight: bold; /* Bold text */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.remove-row-button:hover {
+  background-color: #560000; /* Darker on hover */
+}
+
+.add-row-button {
+  margin: 0px;
+  padding: 0px;
+  width: 25px; /* Fixed width */
+  height: 25px; /* Fixed height */
+  background-color: #000; /* Black background */
+  color: white; /* White text */
+  display: flex; /* Flexbox for centering */
+  font-size: 20px; /* Adjust the size as needed */
+  margin-top: 10px; 
+  margin-bottom: 50px; 
+  transition: background-color 0.5s ease;
+}
+
+.calculate-button {
+
+  margin-top: 10px;    
+  width: 200px; /* Fixed width */
+  height: 25px; /* Fixed height */
+  background-color: #000; /* Black background */
+  color: white; /* White text */
+  display: flex; /* Flexbox for centering */
+  font-size: 20px; /* Adjust the size as needed */
+  transition: background-color 0.5s ease;
+}
+
+.calculate-button:hover {
+  background-color: #ffffff;
+  color:rgb(0, 0, 0)
+}
+.t-test-table tr:first-child {
+  height: 20px; /* Set the desired height for the first row */
+} 
+
+.t-test-table td.center,
+.t-test-table th.center {
+  text-align: center; /* Center text in cells */
+}
+
+.t-test-table th:first-child,
+.t-test-table td:first-child {
+  background-color: #f9f9f9; /* Transparent background */
+  border: none; /* No border */
+  text-align: center; /* Center text in cells */
+  width: 30px; /* Fixed width for the first column */
+}
+
+.t-test-table th:nth-child(2) {
+  width: 50px;
+}
+
+.t-test-table th:nth-child(3) {
+  width: 20%; /* Set width for the label column */
+}
+
+.t-test-table th:nth-child(4),
+.t-test-table th:nth-child(5),
+.t-test-table th:nth-child(6) {
+  width: 20%; /* Set width for mean, std, and N columns */
+}
+
+.add-row-button {
+  min-width: 300px; /* Set fixed width */
+  min-height: 20px; /* Set a minimum height for the button */
+  background-color: #000; /* Black background */
+  color: white; /* White text */
+  display: flex; /* Flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically, if needed */
+}
+/* Assuming you have a class for your dropdowns */
+.dropdown-container {
+  margin-top: 20px; /* Adjust the value as needed */
+}
+
+/* If the dropdowns are direct children of a specific class, you could do: */
+.t-test-container select {
+  margin: 10px 0; /* Adjusts vertical spacing between dropdowns */
+}
+
+.dropdown-label {
+  margin-right: 10px;
+}
+
+
+.highlight {
+  background-color: green;
+  color: white;
+}
+.results-table{
+  text-align: center;
+  margin: 10px;
+  padding: 10px
+}
+.results-table td, 
+.results-table th {
+  text-align: center;
+  margin: 5px;
+  padding: 5px
+}
+
+
+.results-table th {
+  background-color: #c7c7c7; /* Replace with your desired color */
+  color: #333; /* Text color, adjust as needed */
+  border: #000 1px solid;
+}
+
+.mean-std-dev-table th:first-child, .mean-std-dev-table td:first-child {
+  background-color: #f9f9f9;
+  border: none;
+  text-align: center;
+  width: 30px;
+}
+
+
+/* CalcTTestwStats.css */
+
+.t-test-container {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.t-test-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.t-test-table th,
+.t-test-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+
+.t-test-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.t-test-table input[type="text"],
+.t-test-table input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+
+.remove-row-button,
+.add-row-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.remove-row-button {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.remove-row-button:hover {
+  background-color: #ff3333;
+}
+
+.add-row-button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.add-row-button {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+}
+
+.add-row-button:hover {
+  background-color: #45a049;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
+
+.tail-type-dropdown,
+.highlight-options {
+  margin-bottom: 15px;
+}
+
+.tail-type-dropdown label,
+.highlight-options label {
+  margin-right: 10px;
+}
+
+.tail-type-dropdown select,
+.highlight-options select,
+.highlight-options input[type="number"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.calculate-button {
+  background-color: #008CBA;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.calculate-button:hover {
+  background-color: #007B9A;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.results-table th,
+.results-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.results-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.highlight {
+  background-color: green;
+  color: white;
+}
+.explanation-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.explanation-container h3 {
+  color: #333;
+  border-bottom: 2px solid #4CAF50;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.explanation-container p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .t-test-table,
+  .results-table {
+    font-size: 14px;
+  }
+
+  .t-test-table th,
+  .t-test-table td,
+  .results-table th,
+  .results-table td {
+    padding: 8px;
+  }
+
+  .explanation-container {
+    padding: 15px;
+  }
 }

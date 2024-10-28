@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Title, Legend, ReferenceLine, ResponsiveContainer } from 'recharts';
-import './GraphMeanAndStdDev.css';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ReferenceLine, ResponsiveContainer } from 'recharts';
 import { Box } from '@mui/material';
+import {generateChartData,getRandomColor, calculateChartRange, lineWidthOptions, lineTypeOptions} from '../graphingUtils.js';
+
 
 function NormalDistributionTable() {
   const [distributions, setDistributions] = useState([
@@ -16,43 +17,9 @@ function NormalDistributionTable() {
   const [chartTitle, setChartTitle] = useState(''); // New state for chart title
   const [XAxisTitle, setXAxisTitle] = useState(''); // New state for X-axis title
   const [YAxisTitle, setYAxisTitle] = useState(''); // New state for Y-axis title
-  const [showLineTable, setShowLineTable] = useState(true);
-  const [showPlotOptions, setShowPlotOptions] = useState(true);
+  const [showLineTable, setShowLineTable] = useState(false);
+  const [showPlotOptions, setShowPlotOptions] = useState(false);
 
-  const calculateChartRange = () => {
-    let xMin, xMax, yMin, yMax;
-
-    if (userXRange.min !== '' && userXRange.max !== '') {
-      xMin = parseFloat(userXRange.min);
-      xMax = parseFloat(userXRange.max);
-    } else {
-      xMin = Math.min(...distributions.map(d => parseFloat(d.mean) - 5 * parseFloat(d.stdev)));
-      xMax = Math.max(...distributions.map(d => parseFloat(d.mean) + 5 * parseFloat(d.stdev)));
-    }
-    
-    yMin = userYRange.min !== '' ? parseFloat(userYRange.min) : 0;
-    yMax = userYRange.max !== '' ? parseFloat(userYRange.max) : 'auto';
-
-    return { xMin, xMax, yMin, yMax };
-  };
-
-  const generateChartData = (range) => {
-    const { xMin, xMax } = range;
-    const step = (xMax - xMin) / 200;
-    const data = [];
-
-    for (let x = xMin; x <= xMax; x += step) {
-      const point = { x };
-      distributions.forEach(dist => {
-        const y = normalPDF(x, parseFloat(dist.mean), parseFloat(dist.stdev));
-        point[dist.id] = y;
-      });
-      data.push(point);
-    }
-
-    setChartData(data);
-  };
-  
   const handleChartTitleChange = (e) => {
     setChartTitle(e.target.value);
   };
@@ -75,44 +42,30 @@ function NormalDistributionTable() {
       setUserYRange(newRange);
     }
 
-    validateRange(axis, newRange);
-  };
-
-  const validateRange = (axis, range) => {
-    const min = parseFloat(range.min);
-    const max = parseFloat(range.max);
+    const min = parseFloat(newRange.min);
+    const max = parseFloat(newRange.max);
     
-    if (range.min !== '' && range.max !== '' && !isNaN(min) && !isNaN(max) && min >= max) {
+    if (min !== '' && max !== '' && !isNaN(min) && !isNaN(max) && min >= max) {
       setRangeError({ ...rangeError, [axis]: 'Min must be less than Max' });
     } else {
       setRangeError({ ...rangeError, [axis]: '' });
     }
   };
 
-  const getRandomColor = () => {
-    return '#' + Math.floor(Math.random()*16777215).toString(16);
-  };
-
-
-
   const addRow = () => {
-    const newColor = getRandomColor();
-    setDistributions([...distributions, { mean: 0, stdev: 1, label: '', color: newColor, id: distributions.length + 1, lineWidth: 2, lineType: 'solid' }]);
+    setDistributions([...distributions, { mean: '', stdev: '', label: '', color: getRandomColor(), id: distributions.length + 1, lineWidth: 2, lineType: 'solid' }]);
   };
 
   const removeRow = (id) => {
-    const updatedDistributions = distributions.filter(dist => dist.id !== id);
-    setDistributions(updatedDistributions);
+    setDistributions(distributions.filter(dist => dist.id !== id));
   };
 
   const addLine = () => {
-    const newColor = getRandomColor();
-    setLines([...lines, { id: lines.length + 1, color: newColor, label: `Line ${lines.length + 1}`, type: 'vertical', value: "", lineWidth: 2, lineType: 'dashed' }]);
+    setLines([...lines, { id: lines.length + 1, color: getRandomColor(), label: `Line ${lines.length + 1}`, type: 'vertical', value: "", lineWidth: 2, lineType: 'dashed' }]);
   };
 
   const removeLine = (id) => {
-    const updatedLines = lines.filter(line => line.id !== id);
-    setLines(updatedLines);
+    setLines(lines.filter(line => line.id !== id));
   };
 
   const handleInputChange = (index, field, value) => {
@@ -127,32 +80,16 @@ function NormalDistributionTable() {
     setLines(newLines);
   };
 
-  const normalPDF = (x, mean, stdev) => {
-    return (1 / (stdev * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.pow((x - mean) / stdev, 2));
-  };
-
   useEffect(() => {
-    const range = calculateChartRange();
+    const range = calculateChartRange(userXRange, userYRange, distributions);
     setChartRange(range);
-    generateChartData(range);
+    setChartData(generateChartData(range, distributions));
   }, [distributions, lines, userXRange, userYRange]);
 
-  const lineWidthOptions = [
-    { value: 1, label: 'Thin' },
-    { value: 2, label: 'Normal' },
-    { value: 3, label: 'Thick' },
-    { value: 4, label: 'Very Thick' }
-  ];
-
-  const lineTypeOptions = [
-    { value: 'solid', label: 'Solid' },
-    { value: 'dashed', label: 'Dashed' },
-    { value: 'dotted', label: 'Dotted' }
-  ];
-
   return (
-    <><div className="distribution-table-container">
-      <h2>Nomral Distribution Curves</h2>
+    <>
+    <div className="distribution-table-container">
+      <h2>Add Normal Distribution Curves</h2>
       <table className="distribution-table">
         <thead>
           <tr className="table-header-row">

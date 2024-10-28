@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './CalcTTestwData.css'; // Import your CSS file
 import 'katex/dist/katex.min.css';
 import { jStat } from 'jstat'; // Import jStat for statistical calculations
 

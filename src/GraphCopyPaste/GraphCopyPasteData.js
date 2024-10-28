@@ -24,7 +24,7 @@ function NormalDistributionTable() {
 
     setSampleOrPopulation(value);
   
-    const updatedDistributions = distributions.map(dist => {
+    const updatedDistributions = distributions.filter(dist => dist.data !== '').map(dist => {
       const { mean, stdDev } = calculateMeanAndStdDev(dist.data, value);
       return {
         ...dist,
@@ -114,7 +114,7 @@ function NormalDistributionTable() {
   return (
     <>
     <div className="distribution-table-container">
-      <h2>Nomral Distribution Curves</h2>
+      <h2>Add Normal Distribution Curves</h2>
       <table className="distribution-table">
         <thead>
           <tr className="table-header-row">
@@ -127,15 +127,17 @@ function NormalDistributionTable() {
             <th className="table-header">Line Type</th>
             <th className="table-header">Average</th>
             <th className="table-header">
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
               <select 
-                className="std-dev-dropdown"
-                onChange={(e) => handleSampleOrPopulationChange(e.target.value)}  // Global change handler
-                value={sampleOrPopulation}   // Bind to the global state
+                  className="std-dev-dropdown"
+                  onChange={(e) => handleSampleOrPopulationChange(e.target.value)}  // Global change handler
+                  value={sampleOrPopulation}   // Bind to the global state
               >
-                <option value="population">Population</option>
-                <option value="sample">Sample</option>
+                  <option value="population">Population</option>
+                  <option value="sample">Sample</option>
               </select>
-              Standard Deviation
+              <span>Standard Deviation</span>
+          </div>
             </th>
           </tr>
         </thead>
@@ -445,9 +447,10 @@ function NormalDistributionTable() {
               </LineChart>
             </ResponsiveContainer>
           </Box>
-        </div>
-        <span className="axis-label">(Screenshot this (Prnt Screen or Win+Shft+S or Cmd + Shift + 4) and save/paste in a secure location for future reference!)</span>  
-      </div></>
+        </div>  
+      </div>
+      <span className="screenshot-warning">Screenshot this (Prnt Screen or Win+Shft+S or Cmd + Shift + 4) and save/paste in a secure location for future reference!</span>
+      </>
   );
 }
 

@@ -323,37 +323,41 @@ function MeanAndStdDev() {
           ))}
         </tbody>
       </table>
-      <div class="add-row-button-container"><button class="add-row-button" onClick={addRow}>+</button></div>
+      <div class="add-row-button-container"><button class="add-row-button" onClick={addRow}>Add Row</button></div>
       <hr className="divider" />
       <div className="dropdown-container">
-        <label className="t-test-type">T-Test Type: </label>
-        <select
-          className='dropdown-label'
-          id="t-test-type"
-          value={tTestType}
-          onChange={(e) => setTTestType(e.target.value)}
-          disabled={!areSampleSizesEqual()} // Disable if sample sizes are not equal
-        >
-          {areSampleSizesEqual() ? (
-            <>
-              <option value="paired">Paired</option>
-              <option value="unpaired">Unpaired</option>
-            </>
-          ) : (
-            <option value="unpaired">Unpaired</option> // Only show unpaired option
-          )}
-        </select>
+        <div className="dropdown-row">
+          <label className="t-test-type">T-Test Type: </label>
+          <select
+            className="dropdown-label"
+            id="t-test-type"
+            value={tTestType}
+            onChange={(e) => setTTestType(e.target.value)}
+            disabled={!areSampleSizesEqual()} // Disable if sample sizes are not equal
+          >
+            {areSampleSizesEqual() ? (
+              <>
+                <option value="paired">Paired</option>
+                <option value="unpaired">Unpaired</option>
+              </>
+            ) : (
+              <option value="unpaired">Unpaired</option> // Only show unpaired option
+            )}
+          </select>
+        </div>
 
-        <label className="tail-type">Tail Type: </label>
-        <select
-          className="dropdown-label"
-          id="tail-type"
-          value={tailType}
-          onChange={(e) => setTailType(e.target.value)}
-        >
-          <option value="one-tailed">One-Tailed</option>
-          <option value="two-tailed">Two-Tailed</option>
-        </select>
+        <div className="dropdown-row">
+          <label className="tail-type">Tail Type: </label>
+          <select
+            className="dropdown-label"
+            id="tail-type"
+            value={tailType}
+            onChange={(e) => setTailType(e.target.value)}
+          >
+            <option value="one-tailed">One-Tailed</option>
+            <option value="two-tailed">Two-Tailed</option>
+          </select>
+        </div>
       </div>
       <div className="highlight-options"  title="A p-value indicates the probability of observing the data, given that the null hypothesis is true. The chosen p-value (between 0 and 1) suggests statistical significance, meaning there's less than a <p-value> chance the observed results are due to random variation. A 95% confidence interval is normal, so 0.05 best represents this">
         <label htmlFor="highlightCondition" >Highlight if p-value is: </label>

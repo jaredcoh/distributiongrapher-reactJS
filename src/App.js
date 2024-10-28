@@ -31,7 +31,7 @@ function AppContent() {
     '/calc-mean-stdev': "Calculate Datasets' Means and Standard Deviations",
     '/ttest-matrix': 'Calculate T-Test Matrix',
     '/calc-thres-percent': "Calculate Datasets' Thresholds and Percentages",
-    '/home': 'Homepage',
+    '/': 'Homepage',
     '/elim-outliers': 'Recursively Calculate and Eliminate Outliers for a Dataset',
   };
 
@@ -41,7 +41,7 @@ function AppContent() {
   return (
     <div className="App">
       <header className="App-header">
-        <Link to="/home" className="header-link">
+        <Link to="/" className="header-link">
           <div className="header-content">
             <img src={distributionImage} alt="Normal Distribution" className="header-image" />
             <div className="title-container">
@@ -126,7 +126,7 @@ function AppContent() {
         <Route path="/ttest-matrix" element={<CalcTTestHome />} />
         <Route path="/calc-thres-percent" element={<CalcThresPercent />} />
         <Route path="/elim-outliers" element={<CalcOutliers />} />
-        <Route path="/home" element={<HomePage/>} />
+        <Route path="/" element={<HomePage/>} />
       </Routes>
 
       <footer className="app-footer">

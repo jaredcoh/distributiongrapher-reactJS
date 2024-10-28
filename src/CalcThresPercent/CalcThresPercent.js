@@ -254,7 +254,7 @@ function NormalDistributionCalculator() {
               placeholder="Enter Percent of Range"
             />
           </div>
-          Range Options
+          Range Options:
           <div>
             <label>
               <input type="radio" value="left" checked={rangeType === 'left'} onChange={(e) => setRangeType(e.target.value)} />

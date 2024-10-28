@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import './Home.css';
 
 // Define grid size
 const GRID_ROWS = 4;
@@ -26,7 +25,7 @@ const linkData = [
     link: '/calc-mean-stdev'
   },
   { 
-    label: 'Calculate a Set of Distributions\'s T-Tests', 
+    label: 'Calculate Distributions\' T-Tests', 
     descriptor: 'Input your datasets to calculate to determine whether each dataset is similar', 
     link: '/ttest-matrix'
   },
@@ -36,7 +35,7 @@ const linkData = [
     link: '/calc-thres-percent'
   },
   { 
-    label: 'Calculate a Datasets\' Outliers Recursively', 
+    label: 'Calculate a Dataset\'s Outliers Recursively', 
     descriptor: 'Input your dataset to eliminate outliers', 
     link: '/elim-outliers'
   },

@@ -410,8 +410,9 @@ function NormalDistributionTable() {
               </LineChart>
             </ResponsiveContainer>
           </Box>
-          <span className="axis-label">(Screenshot this (Prnt Screen or Win+Shft+S or Cmd + Shift + 4) and save/paste in a secure location for future reference!)</span>  
-        </div>
+          </div>
+          <span className="screenshot-warning">Screenshot this (Prnt Screen or Win+Shft+S or Cmd + Shift + 4) and save/paste in a secure location for future reference!</span>
+      
       </div></>
   );
 }

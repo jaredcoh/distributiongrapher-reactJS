@@ -181,6 +181,8 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  background-color: #f5f5f5;
+  text-align: center;
 }
 
 .outliers-title {
@@ -340,7 +342,9 @@
 }
 
 /* CalcMeanStd.css */
-
+.std-dev-dropdown{
+  margin-right: 10px;
+}
 .mean-std-dev-container {
   font-family: Arial, sans-serif;
   max-width: 1200px;
@@ -349,6 +353,7 @@
   background-color: #f5f5f5;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center items horizontally */
 }
 
 .mean-std-dev-table {
@@ -430,9 +435,12 @@ hr {
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
-  padding: 20px;
+  padding: 50px;
+  padding-top: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #f9f9f9;
+  text-align: center;
 }
 .input-group {
   margin-bottom: 15px;
@@ -490,9 +498,10 @@ hr {
   font-size: 14px;
   margin-bottom: 20px;
   background-color: #f8f9fa;
-  width:800px;
+  width:90%;
   display: block;
   margin: 10px auto;
+  text-align: center; /* Center items horizontally */
 }
 
 /* Title */
@@ -590,11 +599,9 @@ hr {
 /* Plot image placeholder */
 .plot-image-container {
   margin: auto;
-  border: 3px solid #000000;
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 10px;
   font-size: 14px;
-  margin-bottom: 20px;
   background-color: #ffffff;
   width:800px;
   display: block;
@@ -894,37 +901,17 @@ hr {
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-.line-table-header {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  margin-bottom: 15px;
-}
-.line-table-header h2 {
-  margin-right: 15px;
-}
-
+.line-table-header,
 .plot-options-header {
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
 }
+.line-table-header h2,
 .plot-options-header h2 {
   margin-right: 15px;
 }
 
-
-.calculator-container {
-  font-family: Arial, sans-serif;
-  max-width: 600px;
-  margin: 0 auto;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
 .input-group {
   margin-bottom: 15px;
 }
@@ -976,6 +963,7 @@ hr {
 .t-test-container {
   padding: 20px 6% 20px 20px; /* Add padding around the entire component */
   background-color: #f9f9f9; /* Light grey background */
+  text-align: center; /* Center items horizontally */
 }
 
 .tabs {
@@ -1126,11 +1114,6 @@ hr {
   margin-top: 20px; /* Adjust the value as needed */
 }
 
-/* If the dropdowns are direct children of a specific class, you could do: */
-.t-test-container select {
-  margin: 10px 0; /* Adjusts vertical spacing between dropdowns */
-}
-
 .dropdown-label {
   margin-right: 10px;
 }
@@ -1256,17 +1239,14 @@ hr {
   margin-bottom: 15px;
 }
 
-.tail-type-dropdown label,
-.highlight-options label {
-  margin-right: 10px;
-}
-
 .tail-type-dropdown select,
 .highlight-options select,
-.highlight-options input[type="number"] {
+.highlight-options input[type="number"],
+.t-test-container select{
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  margin: 5px;
 }
 
 .calculate-button {
@@ -1344,4 +1324,106 @@ hr {
   .explanation-container {
     padding: 15px;
   }
+}
+
+.homepage-container {
+  padding: 20px;
+  width: 90%;
+  margin: 0 auto;
+  background-color: #797979;
+}
+
+.top-box {
+  text-align: center;
+  margin-bottom: 40px;
+  background-color: #333333;
+  padding: 40px 30px;
+  border-radius: 8px;
+  color: #ccc;
+  border: 5px solid;
+  border-image: linear-gradient(45deg, rgb(0, 0, 52), grey, black) 1;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 200px);
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.box-link {
+  background-color: #bdbdbd;
+  border-radius: 8px;
+  padding: 15px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.box-link:hover {
+  transform: translateY(-2px) translateX(-3px);
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.5);
+  background-color: #cccccc;
+}
+
+.box-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.box-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+}
+
+.box-content p {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.placeholder-box {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.blank-cell {
+  background-color: #aaaaaa;
+  border-radius: 20px;
+}
+
+.photo {
+  width: 40%;
+  height: 40%;
+  align-items: center;
+  object-fit: cover;
+}
+
+body {
+  background-color: #000000; /* Replace with your desired color */
+}
+
+.screenshot-warning{
+  display: flex; /* Enables Flexbox */
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  font-size: 13px;
+  margin-top: 0px;
+  margin-bottom: 30px;
+  color: #ffd5d5;
 }

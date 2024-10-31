@@ -226,7 +226,7 @@ const CalcTTest = () => {
               max="2"
             />
           </div>
-          <button onClick={calculatePValues} className="calculate-button">Calculate T-Test</button>
+          <button onClick={calculatePValues} className="process-button">Calculate T-Test</button>
           {pValues.length > 0 && (
             <table className="results-table">
               <thead>

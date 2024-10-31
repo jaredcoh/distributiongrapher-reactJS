@@ -112,15 +112,15 @@ function NormalDistributionCalculator() {
     switch (thresholdType) {
       case 'lower':
         probability = 1 - standardNormalCDF(calculateZ(lowerBound));
-        boundDescription = `greater than ${lowerBound}`;
+        boundDescription = `greater than ${formatNumber(lowerBound)}`;
         break;
       case 'upper':
         probability = standardNormalCDF(calculateZ(upperBound));
-        boundDescription = `less than ${upperBound}`;
+        boundDescription = `less than ${formatNumber(upperBound)}`;
         break;
       case 'between':
         probability = standardNormalCDF(calculateZ(upperBound)) - standardNormalCDF(calculateZ(lowerBound));
-        boundDescription = `between ${lowerBound} and ${upperBound}`;
+        boundDescription = `between ${formatNumber(lowerBound)} and ${formatNumber(upperBound)}`;
         console.log(probability);
         break;
       default:
@@ -193,40 +193,45 @@ function NormalDistributionCalculator() {
               <option value="between">P(a &lt; x &lt; b)</option>
             </select>
           </div>
-          {thresholdType && (
-            <>
-              {thresholdType !== 'upper' && (
-                <div className="input-group">
-                  <label htmlFor="lowerBound">Lower Bound (a):</label>
-                  <input
-                    className="input-thres-percent"
-                    id="lowerBound"
-                    type="number"
-                    value={lowerBound}
-                    onChange={(e) => setLowerBound(e.target.value)}
-                    placeholder="Enter Lower Bound"
-                  />
-                </div>
-              )}
-              {thresholdType !== 'lower' && (
-                <div className="input-group">
-                  <label htmlFor="upperBound">Upper Bound (b):</label>
-                  <input
-                    className="input-thres-percent"
-                    id="upperBound"
-                    type="number"
-                    value={upperBound}
-                    onChange={(e) => setUpperBound(e.target.value)}
-                    placeholder="Enter Upper Bound"
-                  />
-                </div>
-              )}
-              <button onClick={calculateProbability}>Calculate Probability</button>
-            </>
-          )}
+          <div className="input-group">
+            {thresholdType && (
+              <>
+                {thresholdType !== 'upper' && (
+                  <div className="input-group">
+                    <label htmlFor="lowerBound">Lower Bound (a):</label>
+                    <input
+                      className="input-thres-percent"
+                      id="lowerBound"
+                      type="number"
+                      value={lowerBound}
+                      onChange={(e) => setLowerBound(e.target.value)}
+                      placeholder="Enter Lower Bound"
+                    />
+                  </div>
+                )}
+                {thresholdType !== 'lower' && (
+                  <div className="input-group">
+                    <label htmlFor="upperBound">Upper Bound (b):</label>
+                    <input
+                      className="input-thres-percent"
+                      id="upperBound"
+                      type="number"
+                      value={upperBound}
+                      onChange={(e) => setUpperBound(e.target.value)}
+                      placeholder="Enter Upper Bound"
+                    />
+                  </div>
+                )}
+              </>
+            )}
+            </div>
+            <button class="process-button" onClick={calculateProbability}>Calculate Probability</button>
+          <hr></hr>
           {result && <p>{result}</p>}
+          
           {occurrenceRate && <p>{occurrenceRate}</p>}
-          <div>
+          <hr></hr>
+          <div className="input-group">
             <label htmlFor="totalSamples">Total Samples:</label>
             <input
               className="input-thres-percent"
@@ -236,7 +241,7 @@ function NormalDistributionCalculator() {
               onChange={(e) => setTotalSamples(e.target.value)}
               placeholder="Enter Total Samples"
             />
-            <button onClick={calculateExpectedSamples}>Calculate Expected Samples</button>
+            <button class="process-button" onClick={calculateExpectedSamples}>Calculate Expected Samples</button>
             {expectedSamples && <p>{expectedSamples}</p>}
           </div>
         </>
@@ -273,7 +278,7 @@ function NormalDistributionCalculator() {
               (a, b) [Symmetric about mean]
             </label>
           </div>
-          <button className="calculate-button" onClick={calculatePercent}>Calculate Percent</button>
+          <button className="process-button" onClick={calculatePercent}>Calculate Percent</button>
           {percentResult && <p>{percentResult}</p>}
         </div>
       )}

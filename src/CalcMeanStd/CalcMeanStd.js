@@ -42,7 +42,6 @@ function calculateStandardDeviation(variance) {
 function MeanAndStdDev() {
   const [rows, setRows] = useState([{ 
     numbers: '', 
-    delimiter: 'comma', 
     label: '', 
     datasetId: 1, 
     mean: 0, 
@@ -60,7 +59,6 @@ function MeanAndStdDev() {
     const newColor = getRandomColor();
     setRows([...rows, { 
       numbers: '', 
-      delimiter: 'comma', 
       label: '', 
       datasetId: newRowId, 
       mean: 0, 
@@ -85,15 +83,13 @@ function MeanAndStdDev() {
     const newRows = [...rows];
     newRows[index][field] = value;
 
-    const delimiterMap = {
-      whitespace: /\s+/,
-      period: /\./,
-      comma: /,/
-    };
+    const numbersArray = newRows[index].numbers  
+      .trim()                        // Step 1: Trim leading/trailing whitespace
+      .replace(/[,\s]+$/, '')        // Step 2: Remove any trailing commas or spaces
+      .split(/[,\s]+/)               // Step 3: Split by any sequence of commas or whitespace
+      .map(Number)                   // Step 4: Convert each to a Number
+      .filter(n => !isNaN(n));       // Step 5: Filter out non-numeric entries;
 
-    const numbersArray = newRows[index].numbers.split(delimiterMap[newRows[index].delimiter])
-      .map(num => num.trim())
-      .filter(num => num !== '' && !isNaN(num));
 
     const numberCount = numbersArray.length;
 
@@ -146,8 +142,7 @@ function MeanAndStdDev() {
             <th></th>
             <th className="center" title="Unique identifier for the dataset">Dataset ID</th>
             <th className="center" title="Label for the dataset">Label</th>
-            <th className="center" title="Enter your numbers here, separated by the chosen delimiter">Add Numbers Here</th>
-            <th className="center" title="Choose the delimiter for separating numbers">Delimiter</th>
+            <th className="center" title="Enter your numbers here, will be auto-separated by common delimiters">Add Numbers Here</th>
             <th className="center" title="Count of entered values">N</th>
             <th className="center" title="Mean of the entered numbers">Mean</th>
             <th className="center" title="Standard Deviation">Standard Deviation</th>
@@ -185,21 +180,6 @@ function MeanAndStdDev() {
                   onChange={(e) => handleInputChange(index, 'numbers', e.target.value)}
                   style={{ borderColor: index === 0 ? '#000000' : row.color }} // Outline color for "Add Numbers Here"
                 />
-              </td>
-              <td className="center">
-                <select
-                  value={row.delimiter}
-                  onChange={(e) => handleInputChange(index, 'delimiter', e.target.value)}
-                  style={{
-                    backgroundColor: index === 0 ? '#000000' : row.color, // Set the background color to the row's color
-                    color: index === 0 ? '#ffffff' : getContrastYIQ(row.color), // Set text color based on contrast
-                    borderColor: index === 0 ? '#000000' : row.color, // Outline color
-                  }}
-                >
-                  <option value="whitespace">Whitespace</option>
-                  <option value="period">Period</option>
-                  <option value="comma">Comma</option>
-                </select>
               </td>
               <td className="center">{row.count}</td>
               <td className="center">{row.mean}</td>

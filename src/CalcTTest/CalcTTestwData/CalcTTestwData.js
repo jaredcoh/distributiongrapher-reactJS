@@ -51,7 +51,6 @@ function MeanAndStdDev() {
   const [pValues, setPValues] = useState([]);
   const [rows, setRows] = useState([{ 
     numbers: '', 
-    delimiter: 'comma', 
     label: '', 
     datasetId: 1, 
     mean: 0, 
@@ -65,9 +64,8 @@ function MeanAndStdDev() {
     color: getRandomColor() 
   }, { 
     numbers: '', 
-    delimiter: 'comma', 
     label: '', 
-    datasetId: 1, 
+    datasetId: 2, 
     mean: 0, 
     sampleStd: 0, 
     populationStd: 0, 
@@ -93,7 +91,6 @@ function MeanAndStdDev() {
     const newColor = getRandomColor();
     setRows([...rows, { 
       numbers: '', 
-      delimiter: 'comma', 
       label: '', 
       datasetId: newRowId, 
       mean: 0, 
@@ -120,15 +117,12 @@ function MeanAndStdDev() {
     const newRows = [...rows];
     newRows[index][field] = value;
 
-    const delimiterMap = {
-      whitespace: /\s+/,
-      period: /\./,
-      comma: /,/
-    };
-
-    const numbersArray = newRows[index].numbers.split(delimiterMap[newRows[index].delimiter])
-      .map(num => num.trim())
-      .filter(num => num !== '' && !isNaN(num));
+    const numbersArray = newRows[index].numbers  
+      .trim()                        // Step 1: Trim leading/trailing whitespace
+      .replace(/[,\s]+$/, '')        // Step 2: Remove any trailing commas or spaces
+      .split(/[,\s]+/)               // Step 3: Split by any sequence of commas or whitespace
+      .map(Number)                   // Step 4: Convert each to a Number
+      .filter(n => !isNaN(n));       // Step 5: Filter out non-numeric entries;
 
     const numberCount = numbersArray.length;
 
@@ -237,35 +231,24 @@ function MeanAndStdDev() {
 
   return (
     <div className='mean-std-dev-container'>
-      <table className='mean-std-dev-table'>
-        <thead>
+      <table className='t-test-table'>
+        <thead>  
           <tr>
             <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th className="center" colSpan="2">
-              <select
+            <th className="center">Dataset ID</th>
+            <th className="center">Label</th>
+            <th className="center">Add Numbers Here</th>
+            <th className="center">N</th>
+            <th className="center">Mean</th>
+            <th className="center">
+            <select
                 value={stdevType}
                 onChange={(e) => setStdevType(e.target.value)} 
               >
                 <option value="sample">Sample</option>
                 <option value="population">Population</option>
               </select>
-            </th>
-          </tr>
-          <tr>
-            <th></th>
-            <th className="center">Dataset ID</th>
-            <th className="center">Label</th>
-            <th className="center">Add Numbers Here</th>
-            <th className="center">Delimiter</th>
-            <th className="center">N</th>
-            <th className="center">Mean</th>
-            <th className="center">Standard Deviation</th>
+              Standard Deviation</th>
           </tr>
         </thead>
         <tbody>
@@ -293,26 +276,11 @@ function MeanAndStdDev() {
               </td>
               <td className="center">
                 <textarea
-                  rows="3"
+                  rows="2"
                   value={row.numbers}
                   onChange={(e) => handleInputChange(index, 'numbers', e.target.value)}
                   style={{ borderColor: index === 0 ? '#000000' : row.color }}
                 />
-              </td>
-              <td className="center">
-                <select
-                  value={row.delimiter}
-                  onChange={(e) => handleInputChange(index, 'delimiter', e.target.value)}
-                  style={{
-                    backgroundColor: index === 0 ? '#000000' : row.color, // Set the background color to the row's color
-                    color: index === 0 ? '#ffffff' : getContrastYIQ(row.color), // Set text color based on contrast
-                    borderColor: index === 0 ? '#000000' : row.color, // Outline color
-                  }}
-                >
-                  <option value="comma">Comma</option>
-                  <option value="period">Period</option>
-                  <option value="whitespace">Whitespace</option>
-                </select>
               </td>
               <td className="center">{row.count}</td>
               <td className="center">{row.mean}</td>
@@ -374,7 +342,7 @@ function MeanAndStdDev() {
           max="2"
         />
       </div>
-      <button onClick={calculatePValues} className="calculate-button">Calculate T-Test</button>
+      <button onClick={calculatePValues} className="process-button">Calculate T-Test</button>
       {pValues.length > 0 && (
         <table className="results-table">
           <thead>

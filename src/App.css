@@ -176,13 +176,28 @@
   color: inherit;         /* Ensures the text color stays the same */
   display: block;         /* Makes the entire header area clickable */
 }
-.outliers-container {
-  font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
-  text-align: center;
+
+.mean-std-dev-container,
+.t-test-container,
+.outliers-container,
+.distribution-table-container,
+.calculator-container {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  background-color: #f8f9fa;
+  width:90%;
+  display: block;
+  margin: 10px auto;
+  text-align: center; /* Center items horizontally */
+}
+
+.stats-container {
+  display: flex; /* Ensures elements are on the same line */
+  align-items: center; /* Aligns items vertically in the center */
+  justify-content: center;
 }
 
 .outliers-title {
@@ -192,10 +207,13 @@
 
 .input-section {
   margin-bottom: 20px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 }
 
 .data-input {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -205,15 +223,12 @@
 
 .input-controls {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
-  margin-top: 10px;
-}
-
-.input-label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
+  width: 90%;
+  margin: 10px auto 20px auto;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .input-select, .input-number {
@@ -221,6 +236,8 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
+  width: 90%;
+  margin-top:10px;
 }
 
 .process-button {
@@ -306,11 +323,7 @@
   text-decoration: underline;
 }
 
-.stats-container {
-  display: flex; /* Ensures elements are on the same line */
-  align-items: center; /* Aligns items vertically in the center */
-  justify-content: center;
-}
+
 
 .stats-item {
   margin-right: 100px; /* Adjust this value to control the space between items */
@@ -345,16 +358,7 @@
 .std-dev-dropdown{
   margin-right: 10px;
 }
-.mean-std-dev-container {
-  font-family: Arial, sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center; /* Center items horizontally */
-}
+
 
 .mean-std-dev-table {
   width: 100%;
@@ -365,28 +369,24 @@
 
 .mean-std-dev-table th,
 .mean-std-dev-table td {
-  padding: 12px;
+  padding: 2px;
   border: 1px solid #ddd;
+  text-align: center;    /* Centers text horizontally */
+  vertical-align: middle; /* Centers text vertically */
+}
+
+
+.mean-std-dev-table th:first-child,
+.mean-std-dev-table td:first-child {
+  padding: 5px;
   text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .mean-std-dev-table th {
   background-color: #f2f2f2;
   font-weight: bold;
-}
-
-.mean-std-dev-table input[type="text"],
-.mean-std-dev-table textarea,
-.mean-std-dev-table select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.mean-std-dev-table textarea {
-  resize: vertical;
 }
 
 .remove-row-button,
@@ -429,19 +429,6 @@ hr {
   margin: 20px 0;
 }
 
-.calculator-container {
-  font-family: Arial, sans-serif;
-  max-width: 600px;
-  margin: 0 auto;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  padding: 50px;
-  padding-top: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  text-align: center;
-}
 .input-group {
   margin-bottom: 15px;
 }
@@ -449,12 +436,7 @@ hr {
   display: block;
   margin-bottom: 5px;
 }
-.input-thres-percent, .select-thres-percent {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+
 .calc-prob-button {
   width: 100%;
   padding: 10px;
@@ -491,18 +473,7 @@ hr {
   margin-top: 50px;
 }
 /* Container */
-.distribution-table-container {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 14px;
-  margin-bottom: 20px;
-  background-color: #f8f9fa;
-  width:90%;
-  display: block;
-  margin: 10px auto;
-  text-align: center; /* Center items horizontally */
-}
+
 
 /* Title */
 .distribution-title {
@@ -529,6 +500,17 @@ hr {
   background-color: #f2f2f2;
   font-weight: bold;
   text-align: center;
+}
+.distribution-table td:first-child {
+  background-color: #f8f9fa00;
+  text-align: center;
+}
+.distribution-table th:first-child,
+.distribution-table td:first-child {
+  background-color: #f9f9f9;
+  border: none;
+  text-align: center;
+  width: 30px;
 }
 
 .distribution-table td {
@@ -564,16 +546,17 @@ hr {
 }
 
 .input-label, .input-mean, .input-stdev {
-  width: 100%;
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box; /* Ensures padding doesn't affect the width */
-}
-
-.input-label {
+  flex-direction: column;
   font-size: 14px;
-}
+  align-items: center;
+  font-weight: bold;
+  width: 80%;
+  }
+
 
 /* Buttons */
 .add-row-button, .add-line-button {
@@ -730,7 +713,11 @@ hr {
 }
 
 /* Line Table Container */
-.line-table-container {
+.line-table-container,
+.plot-options-container,
+.outliers-container,
+.calculator-container,
+.t-test-container {
   margin: auto;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -841,18 +828,6 @@ hr {
   font-size: 12px;
 }
 
-.plot-options-container {
-    margin: 10px auto;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 14px;
-    margin-bottom: 20px;
-    background-color: #f8f9fa;
-    width:800px;
-    display: block;
-}
-
 .plot-options h2 {
   color: #343a40;
   margin-bottom: 20px;
@@ -919,12 +894,7 @@ hr {
   display: block;
   margin-bottom: 5px;
 }
-.input-thres-percent, .select-thres-percent {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+
 .calc-prob-button {
   width: 100%;
   padding: 10px;
@@ -967,9 +937,8 @@ hr {
 }
 
 .tabs {
-  display: flex;
   margin-bottom: 10px;
-  border-bottom: 2px solid #7a0101; /* Add a bottom border to the tabs */
+  border-bottom: 2px solid #000537; /* Add a bottom border to the tabs */
   color: black;
 }
 
@@ -984,15 +953,16 @@ hr {
 }
 
 .tabs button.active {
-  background-color: #c7c7c7; /* Change the active tab background */
   font-weight: bold;
-  border: 2px solid #ccc; /* Add a border to active tab for emphasis */
-  border-bottom: 2px solid #7a0101; /* Prevent the border from overlapping the content */
-  color: black;
+  cursor: default;
+  pointer-events: none;
+  background-color: #000841; /* Slightly darker background on hover */
+  border-bottom: 2px solid #000841;
+  color: white;
 }
 
 .tabs button:hover {
-  background-color: #d0d0d0; /* Slightly darker background on hover */
+  background-color: #d8e1ff; /* Change the active tab background */
   color: black;
 }
 .t-test-container {
@@ -1025,8 +995,7 @@ hr {
 }
 
 .remove-row-button,
-.add-row-button, 
-.calculate-button {
+.add-row-button {
   cursor: pointer; /* Pointer cursor on hover */
   border-radius: 15px; /* Rounded corners */
   font-size: 15px; /* Adjust the size as needed */
@@ -1053,18 +1022,6 @@ hr {
   transition: background-color 0.5s ease;
 }
 
-.calculate-button {
-
-  margin-top: 10px;    
-  width: 200px; /* Fixed width */
-  height: 25px; /* Fixed height */
-  background-color: #000; /* Black background */
-  color: white; /* White text */
-  display: flex; /* Flexbox for centering */
-  font-size: 20px; /* Adjust the size as needed */
-  transition: background-color 0.5s ease;
-}
-
 .calculate-button:hover {
   background-color: #ffffff;
   color:rgb(0, 0, 0)
@@ -1084,20 +1041,6 @@ hr {
   border: none; /* No border */
   text-align: center; /* Center text in cells */
   width: 30px; /* Fixed width for the first column */
-}
-
-.t-test-table th:nth-child(2) {
-  width: 50px;
-}
-
-.t-test-table th:nth-child(3) {
-  width: 20%; /* Set width for the label column */
-}
-
-.t-test-table th:nth-child(4),
-.t-test-table th:nth-child(5),
-.t-test-table th:nth-child(6) {
-  width: 20%; /* Set width for mean, std, and N columns */
 }
 
 .add-row-button {
@@ -1152,15 +1095,7 @@ hr {
 
 /* CalcTTestwStats.css */
 
-.t-test-container {
-  font-family: Arial, sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+
 
 .t-test-table {
   width: 100%;
@@ -1242,11 +1177,25 @@ hr {
 .tail-type-dropdown select,
 .highlight-options select,
 .highlight-options input[type="number"],
-.t-test-container select{
+.t-test-container select,
+.input-thres-percent, 
+.select-thres-percent,
+.mean-std-dev-table input[type="text"],
+.mean-std-dev-table select, 
+.select-line-width,
+.select-line-type{
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
   margin: 5px;
+}
+
+.mean-std-dev-table textarea{
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 5px;
+
 }
 
 .calculate-button {
@@ -1287,25 +1236,7 @@ hr {
   background-color: green;
   color: white;
 }
-.explanation-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  margin-top: 30px;
-}
 
-.explanation-container h3 {
-  color: #333;
-  border-bottom: 2px solid #4CAF50;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.explanation-container p {
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
 
 /* Responsive design */
 @media (max-width: 768px) {

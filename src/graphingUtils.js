@@ -1,3 +1,13 @@
+const formatNumber = (probability) => {
+  if (probability < 0.0001 || probability > 100000) {
+    return probability.toExponential(4);
+  }
+  if (Math.abs(Math.round(probability) - probability) < Number.EPSILON) {
+    return Math.round(probability).toString();
+  }
+  return probability.toFixed(4);
+};
+
 export const calculateMeanAndStdDev = (data, type) => {
     // Split the trimmed string and convert to numbers
     const numbers = data.trim().replace(/[,\s]+$/, '').split(/[,\s]+/).map(Number).filter(n => !isNaN(n));

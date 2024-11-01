@@ -2,13 +2,13 @@ import distributionImage from './DistributionCalculatorLogo.png';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
-import GraphMeanAndStdDev from './GraphMeanAndStdDev/GraphMeanAndStdDev';
-import GraphCopyPasteData from './GraphCopyPaste/GraphCopyPasteData';
-import CalcMeanStd from './CalcMeanStd/CalcMeanStd';
-import CalcTTestHome from './CalcTTest/CalcTTestHome/CalcTTestHome';
-import CalcThresPercent from './CalcThresPercent/CalcThresPercent';
-import CalcOutliers from './CalcOutliers/CalcOutliers';
-import HomePage from './Home/Home'
+import GraphMeanAndStdDev from './GraphMeanAndStdDev';
+import GraphCopyPasteData from './GraphCopyPasteData';
+import CalcMeanStd from './CalcMeanStd';
+import CalcTTestHome from './CalcTTest/CalcTTestHome/CalcTTestHome.js';
+import CalcThresPercent from './CalcThresPercent';
+import CalcOutliers from './CalcOutliers';
+import HomePage from './Home.js'
 function AppContent() {
   const [showDropdown, setShowDropdown] = useState({ plot: false, calculate: false });
   const location = useLocation(); // Get current location

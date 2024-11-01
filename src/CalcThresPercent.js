@@ -148,7 +148,7 @@ function NormalDistributionCalculator() {
       <h2>Thresholds and Percentages</h2>
       <p>Enter the mean and standard deviation of the distribution, and choose between thresholds or percentages.</p>
       <div className="input-group">
-        <label className="label-thres-percent" htmlFor="mean">Mean (μ):</label>
+        <label className="label-thres-percent" htmlFor="mean"><strong>Mean (μ):</strong></label>
         <input
           className="input-thres-percent"
           id="mean"
@@ -159,7 +159,7 @@ function NormalDistributionCalculator() {
         />
       </div>
       <div className="input-group">
-        <label className="label-thres-percent" htmlFor="stdDev">Standard Deviation (σ):</label>
+        <label className="label-thres-percent" htmlFor="stdDev"><strong>Standard Deviation (σ):</strong></label>
         <input
           className="input-thres-percent"
           id="stdDev"
@@ -249,27 +249,27 @@ function NormalDistributionCalculator() {
       {activeTab === 'percent' && (
         <div className="percent-tab">
           <div className="input-group">
-            <label className="label-thres-percent" htmlFor="percentInput">Enter Percent of Range (%):</label>
+            <label className="label-thres-percent" htmlFor="percentInput"><strong>Enter Percent of Range (%):</strong></label>
             <input
               className="input-thres-percent"
               id="percentInput"
               type="number"
               value={percentInput}
               onChange={(e) => setPercentInput(e.target.value)}
-              placeholder="Enter Percent of Range"
+              placeholder="Enter % here"
             />
           </div>
-          Range Options:
+          <strong> Range Options: </strong>
           <div>
             <label>
               <input type="radio" value="left" checked={rangeType === 'left'} onChange={(e) => setRangeType(e.target.value)} />
-              (-∞, a)
+              (-∞, a) [Values less than a]
             </label>
           </div>
           <div>
             <label>
               <input type="radio" value="right" checked={rangeType === 'right'} onChange={(e) => setRangeType(e.target.value)} />
-              (b, ∞)
+              (b, ∞) [Values greater than b]
             </label>
           </div>
           <div>

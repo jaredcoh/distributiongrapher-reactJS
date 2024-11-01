@@ -1,4 +1,4 @@
-const formatNumber = (probability) => {
+export const formatNumber = (probability) => {
   if (probability < 0.0001 || probability > 100000) {
     return probability.toExponential(4);
   }

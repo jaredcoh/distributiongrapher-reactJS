@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ReferenceLine, ResponsiveContainer } from 'recharts';
 import { Box } from '@mui/material';
-import {generateChartData,getRandomColor, calculateChartRange, lineWidthOptions, lineTypeOptions} from '../graphingUtils.js';
-
+import {formatNumber, calculateMeanAndStdDev,generateChartData,getRandomColor, calculateChartRange, lineWidthOptions, lineTypeOptions} from './graphingUtils.js';
 
 function NormalDistributionTable() {
   const [distributions, setDistributions] = useState([
-    { mean: '', stdev: '', label: '', color: '#000000', id: 1, lineWidth: 2, lineType: 'solid' }
+    { label: '', color: '#000000', data: '',id: 1, lineWidth: 2, lineType: 'solid' , average: '', stdDev: '' }
   ]);
   const [userXRange, setUserXRange] = useState({ min: '', max: '' });
   const [userYRange, setUserYRange] = useState({ min: '', max: '' });
   const [lines, setLines] = useState([]);
-  const [chartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState([])
   const [rangeError, setRangeError] = useState({ x: '', y: '' });
   const [chartRange, setChartRange] = useState({ xMin: 0, xMax: 0, yMin: 0, yMax: 0 });
   const [chartTitle, setChartTitle] = useState(''); // New state for chart title
@@ -19,12 +18,30 @@ function NormalDistributionTable() {
   const [YAxisTitle, setYAxisTitle] = useState(''); // New state for Y-axis title
   const [showLineTable, setShowLineTable] = useState(false);
   const [showPlotOptions, setShowPlotOptions] = useState(false);
+  const [sampleOrPopulation, setSampleOrPopulation] = useState('sample');
 
+  const handleSampleOrPopulationChange = (value) => {
+
+    setSampleOrPopulation(value);
+  
+    const updatedDistributions = distributions.filter(dist => dist.data !== '').map(dist => {
+      const { mean, stdDev } = calculateMeanAndStdDev(dist.data, value);
+      return {
+        ...dist,
+        average: mean.toFixed(2),
+        stdDev: stdDev.toFixed(2)
+      };
+    });
+  
+    setDistributions(updatedDistributions);
+  };
+  
   const handleChartTitleChange = (e) => {
     setChartTitle(e.target.value);
   };
 
   const handleXAxisTitleChange = (e) => {
+
     setXAxisTitle(e.target.value);
   }
 
@@ -33,6 +50,7 @@ function NormalDistributionTable() {
   }
 
   const handleRangeChange = (axis, bound, value) => {
+
     const newRange = axis === 'x' ? { ...userXRange } : { ...userYRange };
     newRange[bound] = value;
     
@@ -67,10 +85,19 @@ function NormalDistributionTable() {
   const removeLine = (id) => {
     setLines(lines.filter(line => line.id !== id));
   };
-
   const handleInputChange = (index, field, value) => {
     const newDistributions = [...distributions];
+    if (field === 'data' && value.trim() !== '' && isNaN(value.trim()[0])) {
+      alert("Please start with a number (For decimals, put 0.01 instead of .01).");
+      return; // Exit the function if validation fails
+    }
     newDistributions[index][field] = value;
+    if (field === 'data') {
+      const { mean, stdDev } = calculateMeanAndStdDev(value, sampleOrPopulation); // Use the correct type (sample/population)
+      newDistributions[index].average = mean.toFixed(2);
+      newDistributions[index].stdDev = stdDev.toFixed(2);
+    }
+  
     setDistributions(newDistributions);
   };
 
@@ -80,11 +107,13 @@ function NormalDistributionTable() {
     setLines(newLines);
   };
 
+
   useEffect(() => {
     const range = calculateChartRange(userXRange, userYRange, distributions);
     setChartRange(range);
     setChartData(generateChartData(range, distributions));
   }, [distributions, lines, userXRange, userYRange]);
+  
 
   return (
     <>
@@ -97,10 +126,23 @@ function NormalDistributionTable() {
             <th className="table-header">Dataset ID</th>
             <th className="table-header">Color</th>
             <th className="table-header">Label</th>
-            <th className="table-header">Mean</th>
-            <th className="table-header">Standard Deviation</th>
+            <th className="table-header">Data Input</th>
             <th className="table-header">Line Width</th>
             <th className="table-header">Line Type</th>
+            <th className="table-header">Average</th>
+            <th className="table-header">
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <select 
+                  className="std-dev-dropdown"
+                  onChange={(e) => handleSampleOrPopulationChange(e.target.value)}  // Global change handler
+                  value={sampleOrPopulation}   // Bind to the global state
+              >
+                  <option value="population">Population</option>
+                  <option value="sample">Sample</option>
+              </select>
+              <span>Standard Deviation</span>
+          </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -127,21 +169,12 @@ function NormalDistributionTable() {
                   style={{ borderColor: dist.color }} />
               </td>
               <td className="table-cell">
-                <input
+                <textarea
                   type="number"
-                  value={dist.mean}
-                  placeholder="Mean"
-                  onChange={(e) => handleInputChange(index, 'mean', e.target.value)}
-                  className="input-mean"
-                  style={{ borderColor: dist.color }} />
-              </td>
-              <td className="table-cell">
-                <input
-                  type="number"
-                  value={dist.stdev}
-                  placeholder="Standard Deviation"
-                  onChange={(e) => handleInputChange(index, 'stdev', e.target.value)}
-                  className="input-stdev"
+                  value={dist.data}
+                  placeholder="Input Data Here"
+                  onChange={(e) => handleInputChange(index, 'data', e.target.value)}
+                  className="input-data"
                   style={{ borderColor: dist.color }} />
               </td>
               <td className="table-cell">
@@ -168,6 +201,12 @@ function NormalDistributionTable() {
                   ))}
                 </select>
               </td>
+              <td className="table-cell">
+                  {dist.average}
+                </td>
+                <td className="table-cell">
+                  {dist.stdDev}
+                </td>
             </tr>
           ))}
         </tbody>
@@ -339,8 +378,10 @@ function NormalDistributionTable() {
         </>
         )}
       </div>
+      <hr />
       <div className="plot-container">
-        <hr />
+
+        
         <div className="plot-image-container">
           <Box
             marginBottom={"40px"}
@@ -366,6 +407,7 @@ function NormalDistributionTable() {
                     position: 'bottom',
                     offset: 0
                   }} />
+                  tickFormatter={(tick) => formatNumber(tick)}
                 <YAxis
                   domain={[chartRange.yMin, chartRange.yMax]}
                   label={{
@@ -374,6 +416,7 @@ function NormalDistributionTable() {
                     position: 'left',
                     offset: 0
                   }} />
+                  tickFormatter={(tick) => formatNumber(tick)}
                 <Legend
                   layout="horizontal"
                   verticalAlign="top"
@@ -388,7 +431,7 @@ function NormalDistributionTable() {
                       strokeWidth={dist.lineWidth}
                       strokeDasharray={dist.lineType === 'dashed' ? '5 5' : dist.lineType === 'dotted' ? '1 1' : ''}
                       dot={false}
-                      name={`${dist.label || `Dataset ${dist.id}`} (μ=${dist.mean}, σ=${dist.stdev})`}
+                      name={`${dist.label || `Dataset ${dist.id}`} (μ=${dist.average}, σ=${dist.stdDev})`}
                       isAnimationActive={false} />
                   </React.Fragment>
                 ))}
@@ -410,10 +453,10 @@ function NormalDistributionTable() {
               </LineChart>
             </ResponsiveContainer>
           </Box>
-          </div>
-          <span className="screenshot-warning">Screenshot this (Prnt Screen or Win+Shft+S or Cmd + Shift + 4) and save/paste in a secure location for future reference!</span>
-      
-      </div></>
+        </div>  
+      </div>
+      <span className="screenshot-warning">Screenshot this (Prnt Screen or Win+Shft+S or Cmd + Shift + 4) and save/paste in a secure location for future reference!</span>
+      </>
   );
 }
 

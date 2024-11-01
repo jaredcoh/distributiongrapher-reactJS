@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import 'katex/dist/katex.min.css';
-import { BlockMath } from 'react-katex';
-
+const formatNumber = (probability) => {
+  if (probability < 0.0001 || probability > 100000) {
+    return probability.toExponential(4);
+  }
+  if (Math.abs(Math.round(probability) - probability) < Number.EPSILON) {
+    return Math.round(probability).toString();
+  }
+  return probability.toFixed(4);
+};
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -36,7 +43,7 @@ function calculateVariance(values, isSample = true) {
 
 // Helper function to calculate standard deviation
 function calculateStandardDeviation(variance) {
-  return Math.sqrt(variance).toFixed(2);
+  return Math.sqrt(variance);
 }
 
 function MeanAndStdDev() {
@@ -98,10 +105,10 @@ function MeanAndStdDev() {
       newRows[index].mean = calculateMean(values);
       const sampleVariance = calculateVariance(values, true);
       const populationVariance = calculateVariance(values, false);
-      newRows[index].sampleVar = sampleVariance.toFixed(2);
-      newRows[index].populationVar = populationVariance.toFixed(2);
-      newRows[index].sampleStd = calculateStandardDeviation(sampleVariance);
-      newRows[index].populationStd = calculateStandardDeviation(populationVariance);
+      newRows[index].sampleVar = formatNumber(sampleVariance);
+      newRows[index].populationVar = formatNumber(populationVariance);
+      newRows[index].sampleStd = formatNumber(calculateStandardDeviation(sampleVariance));
+      newRows[index].populationStd = formatNumber(calculateStandardDeviation(populationVariance));
     } else {
       newRows[index].mean = 0;
       newRows[index].sampleStd = 0;
@@ -127,7 +134,7 @@ function MeanAndStdDev() {
             <th></th>
             <th></th>
             <th></th>
-            <th></th>
+            
             <th className="center" colSpan="2">
               <select
                 value={stdevType}

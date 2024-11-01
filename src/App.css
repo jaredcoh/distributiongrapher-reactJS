@@ -179,18 +179,35 @@
 
 .mean-std-dev-container,
 .t-test-container,
+.distribution-table-container{
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #f8f9fa;
+  width:90%;
+  display: block;
+  margin: 10px auto;
+  margin-bottom: 20px;
+  text-align: center; /* Center items horizontally */
+}
+.line-table-container,
+.plot-options-container,
 .outliers-container,
-.distribution-table-container,
-.calculator-container {
+.calculator-container
+{
+  margin: auto;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
   font-size: 14px;
   margin-bottom: 20px;
   background-color: #f8f9fa;
-  width:90%;
+  width:80%;
   display: block;
-  margin: 10px auto;
+  align-items: center;
+  justify-content: center;
+  padding: auto;
   text-align: center; /* Center items horizontally */
 }
 
@@ -212,13 +229,14 @@
   justify-content: center;
 }
 
-.data-input {
-  width: 90%;
+.data-input,
+.input-data {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
   resize: vertical;
   font-size: 16px;
+  font-family: Arial, sans-serif;
 }
 
 .input-controls {
@@ -243,7 +261,7 @@
 .process-button {
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -355,9 +373,7 @@
 }
 
 /* CalcMeanStd.css */
-.std-dev-dropdown{
-  margin-right: 10px;
-}
+
 
 
 .mean-std-dev-table {
@@ -376,7 +392,6 @@
 }
 
 
-.mean-std-dev-table th:first-child,
 .mean-std-dev-table td:first-child {
   padding: 5px;
   text-align: center;
@@ -386,26 +401,6 @@
 
 .mean-std-dev-table th {
   background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-.remove-row-button,
-.add-row-button {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.remove-row-button {
-  background-color: #ff4d4d;
-  color: white;
-}
-
-.remove-row-button:hover {
-  background-color: #ff3333;
 }
 
 .add-row-button-container {
@@ -413,67 +408,45 @@
   margin-top: 20px;
 }
 
-.add-row-button {
-  background-color: #4CAF50;
+.add-row-button, .add-line-button {
+  width: 50%;
+  padding: 5px;
+  background-color: #0057b4;
   color: white;
-  font-size: 18px;
-  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;;
 }
 
-.add-row-button:hover {
-  background-color: #45a049;
+.add-row-button:hover, .add-line-button:hover {
+  background-color: #0056b3;
 }
+.remove-row-button:hover {
+  background-color: #ff3333;
+}
+
+.remove-row-button, .remove-line-button {
+  padding: 5px 10px;
+  font-size: 15px; /* Adjust the size as needed */
+  border: none;
+  cursor: pointer;
+  align-items: center; /* Center content vertically */
+  font-weight: bold;
+  transition: background-color 0.2s;
+  border-radius: 4px;
+}
+
+
 hr {
   border: none;
   border-top: 1px solid #ddd;
   margin: 20px 0;
 }
-
-.input-group {
-  margin-bottom: 15px;
-}
-.label-thres-percent {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.calc-prob-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.calc-prob-button:hover {
-  background-color: #45a049;
-}
-.result {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  text-align: center;
-}
-.calc-samples{
-  width: 35%;
-  padding: 10px;
-  margin-top:20px;
-  background-color: #000000;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.input-samples{
-  padding-top:20px;
-}
-.explanation{
-  margin-top: 50px;
-}
-/* Container */
-
 
 /* Title */
 .distribution-title {
@@ -524,18 +497,7 @@ hr {
 }
 
 /* Row removal button */
-.remove-row-button {
-  background-color: #f44336; /* Red color */
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
-}
 
-.remove-row-button:hover {
-  background-color: #d32f2f; /* Darker red on hover */
-}
 
 /* Form inputs */
 .color-picker {
@@ -545,7 +507,7 @@ hr {
   border-radius: 4px;
 }
 
-.input-label, .input-mean, .input-stdev {
+.input-label, .input-mean, .input-stdev, .line-value-input {
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -553,31 +515,8 @@ hr {
   flex-direction: column;
   font-size: 14px;
   align-items: center;
-  font-weight: bold;
   width: 80%;
   }
-
-
-/* Buttons */
-.add-row-button, .add-line-button {
-  display: flex;
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.add-row-button:hover, .add-line-button:hover {
-  background-color: #0056b3;
-}
 
 /* Plot image placeholder */
 .plot-image-container {
@@ -614,22 +553,6 @@ hr {
   background-color: #7e4c00;
 }
 
-.line-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  justify-content: center;
-  align-items: center;
-}
-
-.line-table th, .line-table td {
-  font-size: 12px; /* Smaller text */
-  padding: 4px;    /* Smaller padding */
-  
-}
-
 .remove-line-button {
   background-color: #f44336; /* Red color */
   color: white;
@@ -642,9 +565,7 @@ hr {
 .remove-line-button:hover {
   background-color: #d32f2f; /* Darker red on hover */
 }
-.line-table .input-label{
-  width: 100px;
-}
+
 .range-container {
   display: flex;
   justify-content: space-between;
@@ -713,72 +634,19 @@ hr {
 }
 
 /* Line Table Container */
-.line-table-container,
-.plot-options-container,
-.outliers-container,
-.calculator-container,
-.t-test-container {
-  margin: auto;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 14px;
-  margin-bottom: 20px;
-  background-color: #f8f9fa;
-  width:800px;
-  display: block;
-  align-items: center;
-  justify-content: center;
-  padding: auto;
-}
 
-/* Table Styling */
-.line-table {
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.line-table th, .line-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-.line-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-.line-table td {
-  background-color: #ffffff;
-  text-align: center;
-}
-
-/* Additional styles for buttons within the table */
-.remove-line-button {
-  background-color: #f44336; /* Red color */
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.remove-line-button:hover {
-  background-color: #d32f2f; /* Darker red on hover */
-}
-
-/* Table Styling */
 .line-table {
   width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px; 
   border-collapse: collapse;
-  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  font-size: 14px;
 }
 
 .line-table th, .line-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+  font-size: 12px; /* Smaller text */
+  padding: 4px;    /* Smaller padding */
 }
 
 .line-table th {
@@ -788,7 +656,6 @@ hr {
 
 .line-table td {
   background-color: #ffffff;
-  text-align: center;
 }
 
 /* Additional styles for buttons within the table */
@@ -804,6 +671,7 @@ hr {
 .remove-line-button:hover {
   background-color: #d32f2f; /* Darker red on hover */
 }
+
 .range-inputs {
   margin-right: 8px;
 }
@@ -813,6 +681,7 @@ hr {
   vertical-align: top; /* Align it closer to the bottom */
   margin-bottom: 30px;
   font-style: italic;
+  justify-content: left;
 }
 
 .range-input {
@@ -858,8 +727,6 @@ hr {
   outline: 0;
   box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
 }
-
-/* Container for the toggle buttons */
 
 /* Base styles for the toggle buttons */
 .toggle-button {
@@ -930,15 +797,10 @@ hr {
 .explanation{
   margin-top: 50px;
 }
-.t-test-container {
-  padding: 20px 6% 20px 20px; /* Add padding around the entire component */
-  background-color: #f9f9f9; /* Light grey background */
-  text-align: center; /* Center items horizontally */
-}
 
 .tabs {
   margin-bottom: 10px;
-  border-bottom: 2px solid #000537; /* Add a bottom border to the tabs */
+  border-bottom: 2px solid #003711; /* Add a bottom border to the tabs */
   color: black;
 }
 
@@ -956,18 +818,14 @@ hr {
   font-weight: bold;
   cursor: default;
   pointer-events: none;
-  background-color: #000841; /* Slightly darker background on hover */
-  border-bottom: 2px solid #000841;
+  background-color: #003711; /* Slightly darker background on hover */
+  border-bottom: 2px solid #003711;
   color: white;
 }
 
 .tabs button:hover {
-  background-color: #d8e1ff; /* Change the active tab background */
+  background-color: #dadada; /* Change the active tab background */
   color: black;
-}
-.t-test-container {
-  padding: 20px 6% 20px 20px; /* Add padding around the entire component */
-  background-color: #f9f9f9; /* Light grey background */
 }
 
 .t-test-table {
@@ -994,34 +852,6 @@ hr {
   box-sizing: border-box; /* Include padding and border in width */
 }
 
-.remove-row-button,
-.add-row-button {
-  cursor: pointer; /* Pointer cursor on hover */
-  border-radius: 15px; /* Rounded corners */
-  font-size: 15px; /* Adjust the size as needed */
-  font-weight: bold; /* Bold text */
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-}
-
-.remove-row-button:hover {
-  background-color: #560000; /* Darker on hover */
-}
-
-.add-row-button {
-  margin: 0px;
-  padding: 0px;
-  width: 25px; /* Fixed width */
-  height: 25px; /* Fixed height */
-  background-color: #000; /* Black background */
-  color: white; /* White text */
-  display: flex; /* Flexbox for centering */
-  font-size: 20px; /* Adjust the size as needed */
-  margin-top: 10px; 
-  margin-bottom: 50px; 
-  transition: background-color 0.5s ease;
-}
-
 .calculate-button:hover {
   background-color: #ffffff;
   color:rgb(0, 0, 0)
@@ -1043,15 +873,7 @@ hr {
   width: 30px; /* Fixed width for the first column */
 }
 
-.add-row-button {
-  min-width: 300px; /* Set fixed width */
-  min-height: 20px; /* Set a minimum height for the button */
-  background-color: #000; /* Black background */
-  color: white; /* White text */
-  display: flex; /* Flexbox for centering */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically, if needed */
-}
+
 /* Assuming you have a class for your dropdowns */
 .dropdown-container {
   margin-top: 20px; /* Adjust the value as needed */
@@ -1126,43 +948,6 @@ hr {
   box-sizing: border-box;
 }
 
-
-
-.remove-row-button,
-.add-row-button {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.remove-row-button {
-  background-color: #ff4d4d;
-  color: white;
-}
-
-.remove-row-button:hover {
-  background-color: #ff3333;
-}
-
-.add-row-button-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.add-row-button {
-  background-color: #4CAF50;
-  color: white;
-  font-size: 18px;
-  padding: 10px 20px;
-}
-
-.add-row-button:hover {
-  background-color: #45a049;
-}
-
 .divider {
   border: none;
   border-top: 1px solid #ddd;
@@ -1183,35 +968,22 @@ hr {
 .mean-std-dev-table input[type="text"],
 .mean-std-dev-table select, 
 .select-line-width,
-.select-line-type{
+.select-line-type, 
+.line-type-select,
+.std-dev-dropdown{
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
   margin: 5px;
 }
 
-.mean-std-dev-table textarea{
-  padding: 8px;
+.mean-std-dev-table textarea {
   border: 1px solid #ddd;
   border-radius: 4px;
   margin: 5px;
 
 }
 
-.calculate-button {
-  background-color: #008CBA;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-}
-
-.calculate-button:hover {
-  background-color: #007B9A;
-}
 
 .results-table {
   width: 100%;

@@ -241,13 +241,15 @@ function MeanAndStdDev() {
             <th className="center">N</th>
             <th className="center">Mean</th>
             <th className="center">
-            <select
-                value={stdevType}
-                onChange={(e) => setStdevType(e.target.value)} 
-              >
-                <option value="sample">Sample</option>
-                <option value="population">Population</option>
-              </select>
+              <div>
+              <select
+                  value={stdevType}
+                  onChange={(e) => setStdevType(e.target.value)} 
+                >
+                  <option value="sample">Sample</option>
+                  <option value="population">Population</option>
+                </select>
+              </div>
               Standard Deviation</th>
           </tr>
         </thead>

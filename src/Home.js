@@ -139,6 +139,7 @@ function Home() {
   }, []);
 
   return (
+    
     <Box className="homepage-container">
       <Box className="top-box">
         <h2 className="welcome-text">Welcome to the Distributions Grapher!</h2>

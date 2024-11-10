@@ -150,6 +150,7 @@ const OutliersTest = () => {
 
   return (
     <div className="outliers-container">
+      
       <h2>Recursively Calculate and Eliminate Outliers</h2>
       <p>Enter your data, choose your algorithm options, and click "Find Outliers" to get started.</p>
       <div className="input-section">

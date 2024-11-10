@@ -77,6 +77,9 @@ function NormalDistributionCalculator() {
   };
 
   const formatNumber = (probability) => {
+    if (typeof probability != "number"){
+      return probability
+    }
     if (probability < 0.0001 || probability > 100000) {
       return probability.toExponential(4);
     }
@@ -85,59 +88,117 @@ function NormalDistributionCalculator() {
     }
     return probability.toFixed(4);
   };
-  
+  const standardNormalCDF = (x) => {
+    const t = 1 / (1 + 0.2316419 * Math.abs(x));
+    const d = 0.3989423 * Math.exp(-x * x / 2);
+    const probability = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+    return x > 0 ? 1 - probability : probability;
+  };
   const calculateProbability = () => {
     const avg = parseFloat(mean);
     const stDev = parseFloat(stdDev);
 
     if (isNaN(avg) || isNaN(stDev) || stDev <= 0) {
-      setResult('Please enter valid mean and standard deviation values.');
+      setResult('Fixable Error: Please enter valid mean and standard deviation values.');
       setOccurrenceRate(null);
       setProbability(null);
       return;
     }
-
-    const standardNormalCDF = (x) => {
-      const t = 1 / (1 + 0.2316419 * Math.abs(x));
-      const d = 0.3989423 * Math.exp(-x * x / 2);
-      const probability = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
-      return x > 0 ? 1 - probability : probability;
-    };
-
-    const calculateZ = (x) => (x - avg) / stDev;
-
-    let probability;
-    let boundDescription;
-
     switch (thresholdType) {
       case 'lower':
-        probability = 1 - standardNormalCDF(calculateZ(lowerBound));
-        boundDescription = `greater than ${formatNumber(lowerBound)}`;
-        break;
+        if (lowerBound === '' || isNaN(lowerBound)) {
+          setResult('Fixable Error: Please enter a valid lower bound value.');
+          setOccurrenceRate(null);
+          setProbability(null);
+          return;
+        }
       case 'upper':
-        probability = standardNormalCDF(calculateZ(upperBound));
-        boundDescription = `less than ${formatNumber(upperBound)}`;
-        break;
+        if (upperBound === '' || isNaN(upperBound)) {
+          setResult('Fixable Error: Please enter a valid upper bound value.');
+          setOccurrenceRate(null);
+          setProbability(null);
+          return;
+        }
       case 'between':
-        probability = standardNormalCDF(calculateZ(upperBound)) - standardNormalCDF(calculateZ(lowerBound));
-        boundDescription = `between ${formatNumber(lowerBound)} and ${formatNumber(upperBound)}`;
-        console.log(probability);
+        if (upperBound === '' || isNaN(upperBound) && lowerBound === '' || isNaN(lowerBound)) {
+          setResult('Fixable Error: Please enter valid lower and upper bound values.');
+          setOccurrenceRate(null);
+          setProbability(null);
+          return;
+        }
+        if (upperBound < lowerBound) {
+          setResult('Fixable Error: Upper bound must be greater than or equal to lower bound.');
+          setOccurrenceRate(null);
+          setProbability(null);
+          return;
+        }
         break;
+    } 
+    // Z-score calculation
+    const calculateZ = (x) => (x - avg) / stDev;
+    
+    let probability;
+    let boundDescription;
+    
+    switch (thresholdType) {
+      case 'lower':
+        if (lowerBound === '' || isNaN(lowerBound)) {
+          setResult('Fixable Error: Please enter a valid lower bound value.');
+          setOccurrenceRate(null);
+          setProbability(null);
+          return;
+        }
+        const zLower = calculateZ(lowerBound);
+        probability = 1 - standardNormalCDF(zLower); // P(X ≥ lowerBound)
+        boundDescription = `greater than or equal to ${lowerBound}`;
+        break;
+        
+      case 'upper':
+        if (upperBound === '' || isNaN(upperBound)) {
+          setResult('Fixable Error: Please enter a valid upper bound value.');
+          setOccurrenceRate(null);
+          setProbability(null);
+          return;
+        }
+        const zUpper = calculateZ(upperBound);
+        probability = standardNormalCDF(zUpper); // P(X ≤ upperBound)
+        boundDescription = `less than or equal to ${upperBound}`;
+        break;
+        
+      case 'between':
+        if ((upperBound === '' || isNaN(upperBound)) || (lowerBound === '' || isNaN(lowerBound))) {
+          setResult('Fixable Error: Please enter valid lower and upper bound values.');
+          setOccurrenceRate(null);
+          setProbability(null);
+          return;
+        }
+        if (upperBound < lowerBound) {
+          setResult('Fixable Error: Upper bound must be greater than or equal to lower bound.');
+          setOccurrenceRate(null);
+          setProbability(null);
+          return;
+        }
+        const zUpperBound = calculateZ(upperBound);
+        const zLowerBound = calculateZ(lowerBound);
+        probability = standardNormalCDF(zUpperBound) - standardNormalCDF(zLowerBound); // P(lowerBound ≤ X ≤ upperBound)
+        boundDescription = `between ${formatNumber(lowerBound)} and ${formatNumber(upperBound)}`;
+        break;
+        
       default:
         setResult('Please select a threshold type.');
         setProbability(null);
         return;
     }
-
+    
     setResult(`The probability is approximately ${formatNumber(probability)}`);
     
     let occurrenceRateText;
     if (probability > 0.5) {
-      let occurrences=Math.round(probability * 1000); // Starting with a larger scale
+      let occurrences = Math.round(probability * 1000); // Starting with a larger scale
       occurrenceRateText = `${formatNumber(occurrences)} in every ${formatNumber(1000)} samples will be ${boundDescription}.`;
     } else {
-        const inverseRate = Math.round(1 / probability);
-        occurrenceRateText = `1 in every ${formatNumber(inverseRate)} samples will be ${boundDescription}.`;
+      const inverseRate = Math.round(1 / probability);
+      occurrenceRateText = `1 in every ${formatNumber(inverseRate)} samples will be ${boundDescription}.`;
     }
     setProbability(probability);
     setOccurrenceRate(occurrenceRateText);

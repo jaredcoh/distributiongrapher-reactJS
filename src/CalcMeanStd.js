@@ -124,6 +124,7 @@ function MeanAndStdDev() {
 
   return (
     <div className='mean-std-dev-container'>
+      
       <h2>Mean and Standard Deviation Calculator</h2>
       <table className='mean-std-dev-table'>
         <thead>

@@ -39,7 +39,10 @@ function AppContent() {
   const subtitle = subtitleMap[location.pathname] || '';
 
   return (
+    
     <div className="App">
+      <head><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1591793840351191"
+     crossorigin="anonymous"></script></head>
       <header className="App-header">
         <Link to="/" className="header-link">
           <div className="header-content">

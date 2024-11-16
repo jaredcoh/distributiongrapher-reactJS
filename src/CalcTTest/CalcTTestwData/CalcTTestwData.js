@@ -297,7 +297,7 @@ function MeanAndStdDev() {
       <hr className="divider" />
       <div className="dropdown-container">
         <div className="dropdown-row">
-          <label className="t-test-type">T-Test Type: </label>
+          <label title="determines whether the t-test is paired or unpaired (paired=data is dependent on eachother, unparied=data is indepdnent) " className="t-test-type">T-Test Type: </label>
           <select
             className="dropdown-label"
             id="t-test-type"
@@ -317,7 +317,7 @@ function MeanAndStdDev() {
         </div>
 
         <div className="dropdown-row">
-          <label className="tail-type">Tail Type: </label>
+          <label title="determines whether the t-test is one-tailed or two-tailed (one-tailed=only one tail is significant, two-tailed=both tails are significant)" className="tail-type">Tail Type: </label>
           <select
             className="dropdown-label"
             id="tail-type"
